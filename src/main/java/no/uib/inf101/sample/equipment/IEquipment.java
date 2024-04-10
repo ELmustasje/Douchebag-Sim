@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 public interface IEquipment {
     void use();
     boolean isInUse();
+    boolean successfulSet();
+    void resetEquipment();
     void hovering();
     void setDefaultImg();
     boolean hoveringButtion();
@@ -19,5 +21,7 @@ public interface IEquipment {
     void addToPlot(Plot plot);
     BufferedImage getImg();
     void draw(Graphics2D g2);
+    void drawStats(Graphics2D g2);
     void update();
+    void changeDifficulty(ISprite sprite);
 }

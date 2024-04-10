@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class BenchPress implements IEquipment{
 
-    int x,y,width,height;
+    int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
 
     int reps;
     int clicksForRep;
@@ -22,17 +22,19 @@ public class BenchPress implements IEquipment{
     int skipInterval;
 
     boolean using;
+    boolean finished;
     BufferedImage img;
     BufferedImage button;
     MouseHandler mouseHandler;
 
     public BenchPress(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
-        clickReverse = 1;
-        clicksForRep = 10;
-        skipFrames = 0;
-        skipInterval = 120;
-        setDefaultImg();
+        buttonX = 80;
+        buttonY = 270;
+        buttonHeight = 80;
+        buttonWidth = 80;
+        skipInterval = 25;
+        resetEquipment();
     }
 
     @Override
@@ -43,6 +45,21 @@ public class BenchPress implements IEquipment{
     @Override
     public boolean isInUse() {
         return using;
+    }
+
+    @Override
+    public boolean successfulSet() {
+        return finished;
+    }
+
+    @Override
+    public void resetEquipment() {
+        clickReverse = 1;
+        clicksForRep = 10;
+        skipFrames = 0;
+        finished = false;
+        using = false;
+        setDefaultImg();
     }
 
     @Override
@@ -65,8 +82,8 @@ public class BenchPress implements IEquipment{
 
     @Override
     public boolean hoveringButtion() {
-        return mouseHandler.mouseX >= x && mouseHandler.mouseX <= x + 50
-                && mouseHandler.mouseY >= y && mouseHandler.mouseY <= y + 50;
+        return mouseHandler.mouseX >= buttonX && mouseHandler.mouseX <= buttonX + buttonWidth
+                && mouseHandler.mouseY >= buttonY && mouseHandler.mouseY <= buttonY + buttonHeight;
     }
 
     @Override
@@ -106,21 +123,30 @@ public class BenchPress implements IEquipment{
     public void draw(Graphics2D g2) {
         g2.drawImage(img,x,y,width,height,null);
         if(using){
-            g2.fillRect(x,y,50,50);
+
+            drawStats(g2);
         }
+    }
+
+    @Override
+    public void drawStats(Graphics2D g2) {
+        int interval = 170/clicksForRep;
+        g2.drawRect(100,70,40,170);
+        g2.fillRect(buttonX,buttonY,buttonWidth,buttonHeight); //button
+        g2.fillRect(100,240-interval*clickCount,40,interval*clickCount);
     }
 
 
     @Override
     public void update() {
         if(using){
-            System.out.println(clickCount + " " + skipFrames + " " + reps);
+            mouseHandler.update();
             if (clickCount == clicksForRep){
                 reps++;
                 clickCount=0;
             }
             skipFrames++;
-            if(skipFrames == skipInterval){
+            if(skipFrames >= skipInterval){
                 clickCount -= clickReverse;
                 if(clickCount < 0){
                     clickCount = 0;
@@ -133,9 +159,20 @@ public class BenchPress implements IEquipment{
             }
             if(reps == 3){
                 using = false;
+                finished = true;
                 reps = 0;
+            }
+            try {
+                img = ImageIO.read(new File("res/sprites/spriteBench/"+clickCount+".png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
         mouseHandler.mouseReleased(null);
+    }
+
+    @Override
+    public void changeDifficulty(ISprite sprite) {
+        skipInterval-= sprite.getStrength()*2;
     }
 }

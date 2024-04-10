@@ -16,8 +16,8 @@ public class MouseHandler implements MouseListener {
     public void update(){
         mouseX = MouseInfo.getPointerInfo().getLocation().x;
         mouseY = MouseInfo.getPointerInfo().getLocation().y;
-        mouseX -= Main.window.getX();
-        mouseY -= Main.window.getY();
+        mouseX -= Main.window.getX()+5;
+        mouseY -= Main.window.getY()+30;
     }
 
     public String mouseInfoString(){
@@ -25,13 +25,15 @@ public class MouseHandler implements MouseListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        update();
-        mousePressed = true;
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        update();
+        if(!mousePressed){
+            mousePressed = true;
+        }
     }
 
     @Override

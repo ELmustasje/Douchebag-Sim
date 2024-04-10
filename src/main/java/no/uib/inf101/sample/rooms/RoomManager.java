@@ -40,7 +40,6 @@ public class RoomManager {
 
     public void update() {
         if(hoveringRoomPlot()){
-            System.out.println("hovering");
             room.getPlot().hovering();
             if(mouseHandler.mousePressed){
                 room.getPlot().use();
@@ -53,6 +52,11 @@ public class RoomManager {
             sprite.stopDrawing();
         }else {
             sprite.startDrawing();
+            if (room.getPlot().successfulSet()){
+                sprite.updateStrength(1);
+                room.getPlot().resetEquipment();
+                room.getPlot().changeDifficulty(sprite);
+            }
         }
         room.update();
     }

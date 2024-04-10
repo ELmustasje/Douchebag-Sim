@@ -25,7 +25,7 @@ public class RoomOne implements IRoom{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        plot = new Plot(100,250,300,400);
+        plot = new Plot(150,250,300,400);
         plot.addEquiptment(new BenchPress(mouseHandler));
     }
 
@@ -44,7 +44,8 @@ public class RoomOne implements IRoom{
     @Override
     public void setSpriteToRoom(ISprite sprite) {
         //to flip the image take g2.drawImage(image, x + width, y, -width, height, null);
-        sprite.setValues(GamePanel.WIDTH/2 + sprite.getWidth(),GamePanel.HEIGTH/2-150,-sprite.getWidth(),500);
+        sprite.setValues(GamePanel.WIDTH/2 + sprite.getWidth(),GamePanel.HEIGTH/2-150,-sprite.getWidth(),sprite.getHeight());
+
     }
 
     @Override

@@ -1,7 +1,5 @@
 package no.uib.inf101.sample.sprites;
 
-import no.uib.inf101.sample.equipment.IEquipment;
-
 import java.awt.*;
 
 public interface ISprite {
@@ -10,6 +8,10 @@ public interface ISprite {
     void setDefaultValues();
     void setValues(int x, int y, int width, int height);
     int getWidth();
+    int getHeight();
+    int getStrength();
+    void updateStrength(int deltaStrength);
     void stopDrawing();
     void startDrawing();
+    void drawStats(Graphics2D g2);
 }
