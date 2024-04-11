@@ -7,6 +7,7 @@ import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.sprites.ISprite;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,13 +19,10 @@ public class RoomOne implements IRoom{
     Plot plot;
     MouseHandler mouseHandler;
 
+
     public RoomOne(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
-        try {
-            img = ImageIO.read(new File("res/rooms/roomOne.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        setDefaultValues();
         plot = new Plot(150,250,300,400);
         plot.addEquiptment(new BenchPress(mouseHandler));
     }
@@ -38,14 +36,17 @@ public class RoomOne implements IRoom{
 
     @Override
     public void setDefaultValues() {
-
+        try {
+            img = ImageIO.read(new File("res/rooms/roomOne.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void setSpriteToRoom(ISprite sprite) {
         //to flip the image take g2.drawImage(image, x + width, y, -width, height, null);
         sprite.setValues(GamePanel.WIDTH/2 + sprite.getWidth(),GamePanel.HEIGTH/2-150,-sprite.getWidth(),sprite.getHeight());
-
     }
 
     @Override

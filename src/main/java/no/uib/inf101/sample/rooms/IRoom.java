@@ -4,7 +4,6 @@ import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.sprites.ISprite;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public interface IRoom {
     void drawRoom(Graphics2D g2);

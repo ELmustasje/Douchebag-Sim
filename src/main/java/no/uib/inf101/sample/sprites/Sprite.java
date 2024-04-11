@@ -52,7 +52,7 @@ public class Sprite implements ISprite{
         this.y = gp.HEIGTH/2;
         this.heigth = 400;
         this.width = 500;
-        this.strength = 9;
+        this.strength = 0;
         try {
             currentImg = ImageIO.read(new File("res/sprites/spriteDefault.png"));
             bisepForStat = ImageIO.read(new File("res/Other/BisepForStats.png"));

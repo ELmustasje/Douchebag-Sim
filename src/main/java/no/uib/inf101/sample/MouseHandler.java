@@ -1,5 +1,7 @@
 package no.uib.inf101.sample;
 
+import no.uib.inf101.sample.rooms.RoomManager;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -18,11 +20,16 @@ public class MouseHandler implements MouseListener {
         mouseY = MouseInfo.getPointerInfo().getLocation().y;
         mouseX -= Main.window.getX()+5;
         mouseY -= Main.window.getY()+30;
+
+    }
+    public void used(){
+        mousePressed = false;
     }
 
     public String mouseInfoString(){
         return "mouseX: " + mouseX + "mouseY: " + mouseY;
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -30,15 +37,12 @@ public class MouseHandler implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        update();
-        if(!mousePressed){
-            mousePressed = true;
-        }
+        mousePressed = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mousePressed = false;
+            mousePressed = false;
     }
 
     @Override

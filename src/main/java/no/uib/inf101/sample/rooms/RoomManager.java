@@ -3,13 +3,15 @@ package no.uib.inf101.sample.rooms;
 import no.uib.inf101.sample.MouseHandler;
 import no.uib.inf101.sample.sprites.ISprite;
 
+import javax.swing.*;
 import java.awt.*;
 
-public class RoomManager {
+public class RoomManager extends JPanel{
 
     IRoom room;
     ISprite sprite;
     MouseHandler mouseHandler;
+
 
     public RoomManager(ISprite sprite, MouseHandler mouseHandler) {
         this.mouseHandler = mouseHandler;
@@ -41,18 +43,23 @@ public class RoomManager {
     public void update() {
         if(hoveringRoomPlot()){
             room.getPlot().hovering();
-            if(mouseHandler.mousePressed){
+            if(mouseHandler.mousePressed && !room.getPlot().isInUse()){
+                mouseHandler.used();
                 room.getPlot().use();
                 mouseHandler.mouseReleased(null);
             }
         }else {
             room.getPlot().setDefaultImg();
         }
+
         if(room.getPlot().isInUse()){
             sprite.stopDrawing();
         }else {
+            room.setDefaultValues();
             sprite.startDrawing();
+
             if (room.getPlot().successfulSet()){
+                mouseHandler.used();
                 sprite.updateStrength(1);
                 room.getPlot().resetEquipment();
                 room.getPlot().changeDifficulty(sprite);

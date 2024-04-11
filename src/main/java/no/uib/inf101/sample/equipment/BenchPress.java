@@ -24,7 +24,7 @@ public class BenchPress implements IEquipment{
     boolean using;
     boolean finished;
     BufferedImage img;
-    BufferedImage button;
+    BufferedImage buttonImg;
     MouseHandler mouseHandler;
 
     public BenchPress(MouseHandler mouseHandler){
@@ -75,6 +75,7 @@ public class BenchPress implements IEquipment{
     public void setDefaultImg() {
         try {
             img = ImageIO.read(new File("res/equipment/benchpress.png"));
+            buttonImg  = ImageIO.read(new File("res/Other/button.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,6 +83,7 @@ public class BenchPress implements IEquipment{
 
     @Override
     public boolean hoveringButtion() {
+        mouseHandler.update();
         return mouseHandler.mouseX >= buttonX && mouseHandler.mouseX <= buttonX + buttonWidth
                 && mouseHandler.mouseY >= buttonY && mouseHandler.mouseY <= buttonY + buttonHeight;
     }
@@ -132,47 +134,49 @@ public class BenchPress implements IEquipment{
     public void drawStats(Graphics2D g2) {
         int interval = 170/clicksForRep;
         g2.drawRect(100,70,40,170);
-        g2.fillRect(buttonX,buttonY,buttonWidth,buttonHeight); //button
         g2.fillRect(100,240-interval*clickCount,40,interval*clickCount);
+
+        g2.drawImage(buttonImg,buttonX,buttonY,buttonWidth,buttonHeight,null);
     }
 
 
     @Override
     public void update() {
         if(using){
-            mouseHandler.update();
-            if (clickCount == clicksForRep){
-                reps++;
-                clickCount=0;
-            }
-            skipFrames++;
-            if(skipFrames >= skipInterval){
-                clickCount -= clickReverse;
-                if(clickCount < 0){
-                    clickCount = 0;
-                }
-                skipFrames = 0;
-            }
             if(hoveringButtion() && mouseHandler.mousePressed){
+                mouseHandler.used();
                 clickCount++;
+                if (clickCount == clicksForRep){
+                    reps++;
+                    if(reps == 3){
+                        using = false;
+                        finished = true;
+                        reps = 0;
+                    }
+                    clickCount=0;
+                }
+            }else {
+                skipFrames++;
+                if(skipFrames >= skipInterval){
+                    clickCount -= clickReverse;
+                    if(clickCount < 0){
+                        clickCount = 0;
+                    }
+                    skipFrames = 0;
+                }
+            }
 
-            }
-            if(reps == 3){
-                using = false;
-                finished = true;
-                reps = 0;
-            }
             try {
                 img = ImageIO.read(new File("res/sprites/spriteBench/"+clickCount+".png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        mouseHandler.mouseReleased(null);
+
     }
 
     @Override
     public void changeDifficulty(ISprite sprite) {
-        skipInterval-= sprite.getStrength()*2;
+        skipInterval = 25 - sprite.getStrength()*2;
     }
 }
