@@ -41,7 +41,13 @@ public class GamePanel extends JPanel implements Runnable{
         int drawCount = -1;
 
         while (gameThread != null){
-            update();
+            if(mouseH.mousePressed){
+                update();
+                mouseH.used();
+            }else {
+                update();
+            }
+
             repaint();
 
             double remainingTime = nextDrawTime - System.nanoTime();
@@ -72,9 +78,18 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
     public void update(){
-        sprite.update();
-        roomManager.update();
-        mouseH.update();
+        if (mouseH.mousePressed){
+            sprite.update();
+            roomManager.update();
+            mouseH.update();
+            mouseH.used();
+        }else {
+            sprite.update();
+            roomManager.update();
+            mouseH.update();
+        }
+
+
     }
 
     public void paintComponent(Graphics g){

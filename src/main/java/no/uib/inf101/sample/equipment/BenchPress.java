@@ -33,7 +33,7 @@ public class BenchPress implements IEquipment{
         buttonY = 270;
         buttonHeight = 80;
         buttonWidth = 80;
-        skipInterval = 25;
+        skipInterval = 2;
         resetEquipment();
     }
 
@@ -133,8 +133,9 @@ public class BenchPress implements IEquipment{
     @Override
     public void drawStats(Graphics2D g2) {
         int interval = 170/clicksForRep;
-        g2.drawRect(100,70,40,170);
-        g2.fillRect(100,240-interval*clickCount,40,interval*clickCount);
+        g2.setColor(Color.red);
+        g2.drawRect(100,70+interval,40,170-interval);
+        g2.fillRect(100,240-interval*clickCount,40,interval*clickCount+1);
 
         g2.drawImage(buttonImg,buttonX,buttonY,buttonWidth,buttonHeight,null);
     }
@@ -144,7 +145,6 @@ public class BenchPress implements IEquipment{
     public void update() {
         if(using){
             if(hoveringButtion() && mouseHandler.mousePressed){
-                mouseHandler.used();
                 clickCount++;
                 if (clickCount == clicksForRep){
                     reps++;
@@ -155,15 +155,15 @@ public class BenchPress implements IEquipment{
                     }
                     clickCount=0;
                 }
-            }else {
-                skipFrames++;
-                if(skipFrames >= skipInterval){
-                    clickCount -= clickReverse;
-                    if(clickCount < 0){
-                        clickCount = 0;
-                    }
-                    skipFrames = 0;
+            }
+            skipFrames++;
+            if(skipFrames >= skipInterval){
+                clickCount -= clickReverse;
+                if(clickCount < 0){
+                    clickCount = 0;
                 }
+                skipFrames = 0;
+
             }
 
             try {
@@ -177,6 +177,7 @@ public class BenchPress implements IEquipment{
 
     @Override
     public void changeDifficulty(ISprite sprite) {
-        skipInterval = 25 - sprite.getStrength()*2;
+        skipInterval = 21 - sprite.getStrength()*2;
+
     }
 }

@@ -32,7 +32,7 @@ public class MouseHandler implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        mousePressed = true;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MouseHandler implements MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-            mousePressed = false;
+        mousePressed = false;
     }
 
     @Override

@@ -110,7 +110,7 @@ public class Sprite implements ISprite{
         int interval = 200/10;//strength step
         int boxX = gp.getWidth() - boxWidth - 15;
         int boxY = 15;
-
+        g2.setColor(Color.black);
         g2.drawRect(boxX,boxY,boxWidth,boxHeigth);
         g2.setColor(Color.red);
         g2.fillRect(boxX,boxY,interval*strength,boxHeigth);

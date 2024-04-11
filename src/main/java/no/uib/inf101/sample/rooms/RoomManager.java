@@ -44,9 +44,7 @@ public class RoomManager extends JPanel{
         if(hoveringRoomPlot()){
             room.getPlot().hovering();
             if(mouseHandler.mousePressed && !room.getPlot().isInUse()){
-                mouseHandler.used();
                 room.getPlot().use();
-                mouseHandler.mouseReleased(null);
             }
         }else {
             room.getPlot().setDefaultImg();
@@ -59,7 +57,6 @@ public class RoomManager extends JPanel{
             sprite.startDrawing();
 
             if (room.getPlot().successfulSet()){
-                mouseHandler.used();
                 sprite.updateStrength(1);
                 room.getPlot().resetEquipment();
                 room.getPlot().changeDifficulty(sprite);
