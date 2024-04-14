@@ -10,6 +10,8 @@ public class MouseHandler implements MouseListener {
     public int mouseX;
     public int mouseY;
     public boolean mousePressed;
+    public boolean mouseHeld;
+
 
     public MouseHandler(){
         update();
@@ -32,17 +34,19 @@ public class MouseHandler implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        mousePressed = true;
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         mousePressed = true;
+        mouseHeld = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         mousePressed = false;
+        mouseHeld = false;
     }
 
     @Override

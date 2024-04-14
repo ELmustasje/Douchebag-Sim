@@ -11,9 +11,7 @@ public class GamePanel extends JPanel implements Runnable{
     // SCREEN SETTINGS
     public final static int WIDTH = 800;
     public final static int HEIGTH = 600;
-    public static boolean showFPS = true;
 
-    int FPS = 60;
 
     MouseHandler mouseH = new MouseHandler();
     Thread gameThread;
@@ -34,57 +32,18 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-
-        double drawInterval = 1_000_000_000/FPS;
-        double nextDrawTime = System.nanoTime() + drawInterval;
-        long timer = 0;
-        int drawCount = -1;
-
-        while (gameThread != null){
-            if(mouseH.mousePressed){
-                update();
-                mouseH.used();
-            }else {
-                update();
-            }
-
+        while (gameThread != null) {
+            update();
             repaint();
-
-            double remainingTime = nextDrawTime - System.nanoTime();
-            remainingTime = remainingTime/1000000;
-            timer += drawInterval;
-            drawCount++;
-
-            if(timer >= 1000000000){
-                if(showFPS){
-                    System.out.println("FPS:"+drawCount);
-                }
-
-                drawCount = -1;
-                timer = 0;
-            }
-            if(remainingTime < 0){
-                remainingTime = 0;
-            }
-
-
-
-            try {
-                Thread.sleep((long) remainingTime);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            nextDrawTime += drawInterval;
         }
     }
+
     public void update(){
         if (mouseH.mousePressed){
-            sprite.update();
             roomManager.update();
             mouseH.update();
             mouseH.used();
         }else {
-            sprite.update();
             roomManager.update();
             mouseH.update();
         }

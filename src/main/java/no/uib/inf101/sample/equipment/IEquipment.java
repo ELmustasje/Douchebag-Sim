@@ -13,7 +13,6 @@ public interface IEquipment {
     void resetEquipment();
     void hovering();
     void setDefaultImg();
-    boolean hoveringButtion();
     int getHeigth();
     int getWidth();
     int getY();

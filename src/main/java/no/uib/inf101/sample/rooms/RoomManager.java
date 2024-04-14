@@ -63,6 +63,7 @@ public class RoomManager extends JPanel{
             }
         }
         room.update();
+        sprite.update();
     }
 
 }

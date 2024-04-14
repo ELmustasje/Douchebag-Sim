@@ -6,31 +6,33 @@ import no.uib.inf101.sample.sprites.ISprite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class BenchPress implements IEquipment{
+public class AbsBench implements IEquipment{
 
     int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
 
-    int reps;
-    int clicksForRep;
-    int clickCount;
-    int clickReverse;
+    int pic;
+    int slidesForSet;
+    int slideCount;
+    int slideReverse;
     int skipFrames;
     int skipInterval;
 
     boolean using;
     boolean finished;
+    boolean awaitToGoDown;
     BufferedImage img;
     BufferedImage buttonImg;
     MouseHandler mouseHandler;
 
-    public BenchPress(MouseHandler mouseHandler){
+    public AbsBench(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
-        buttonX = 80;
-        buttonY = 270;
+        buttonX = 85;
+        buttonY = 320;
         buttonHeight = 80;
         buttonWidth = 80;
         skipInterval = 23;
@@ -54,8 +56,10 @@ public class BenchPress implements IEquipment{
 
     @Override
     public void resetEquipment() {
-        clickReverse = 1;
-        clicksForRep = 10;
+        pic = 1;
+        buttonY = 330;
+        slideReverse = 1;
+        slidesForSet = 4;
         skipFrames = 0;
         finished = false;
         using = false;
@@ -81,7 +85,7 @@ public class BenchPress implements IEquipment{
         }
     }
 
-    public boolean hoveringButton() {
+    public boolean hoveringSlider() {
         mouseHandler.update();
         return mouseHandler.mouseX >= buttonX && mouseHandler.mouseX <= buttonX + buttonWidth
                 && mouseHandler.mouseY >= buttonY && mouseHandler.mouseY <= buttonY + buttonHeight;
@@ -124,16 +128,26 @@ public class BenchPress implements IEquipment{
     public void draw(Graphics2D g2) {
         g2.drawImage(img,x,y,width,height,null);
         if(using){
+
             drawStats(g2);
         }
     }
 
     @Override
     public void drawStats(Graphics2D g2) {
-        int interval = 170/clicksForRep;
-        g2.setColor(Color.red);
-        g2.drawRect(100,70+interval,40,170-interval);
-        g2.fillRect(100,240-interval*clickCount,40,interval*clickCount+1);
+        int interval = 150/slidesForSet;
+        g2.setColor(Color.black);
+        g2.fillRect(100,100,50,290);
+
+        g2.drawRect(160,100,50,150);
+        g2.fillRect(160,250-interval*slideCount,50,interval*slideCount+1);
+
+        if(buttonY < 70){
+            buttonY = 70;
+        } else if (buttonY > 320){
+            buttonY = 320;
+        }
+
         g2.drawImage(buttonImg,buttonX,buttonY,buttonWidth,buttonHeight,null);
     }
 
@@ -141,30 +155,26 @@ public class BenchPress implements IEquipment{
     @Override
     public void update() {
         if(using){
-            if(hoveringButton() && mouseHandler.mousePressed){
-                clickCount++;
-                if (clickCount == clicksForRep){
-                    reps++;
-                    if(reps == 5){
+            if(hoveringSlider() && mouseHandler.mouseHeld){
+                mouseHandler.update();
+                buttonY = mouseHandler.mouseY-buttonHeight/2;
+                pic = (buttonY)/30;
+                if (buttonY <= 70 && !awaitToGoDown){
+                    awaitToGoDown = true;
+                    slideCount++;
+                    if (slideCount == slidesForSet){
                         using = false;
                         finished = true;
-                        reps = 0;
+                        slideCount = 0;
                     }
-                    clickCount=0;
                 }
-            }
-            skipFrames++;
-            if(skipFrames >= skipInterval){
-                clickCount -= clickReverse;
-                if(clickCount < 0){
-                    clickCount = 0;
+                if (buttonY >= 330){
+                    awaitToGoDown = false;
                 }
-                skipFrames = 0;
-
             }
 
             try {
-                img = ImageIO.read(new File("res/sprites/spriteBench/"+clickCount+".png"));
+                img = ImageIO.read(new File("res/sprites/spriteBench/"+ (pic-1) +".png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

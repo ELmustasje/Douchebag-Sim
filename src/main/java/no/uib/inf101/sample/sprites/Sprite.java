@@ -48,8 +48,6 @@ public class Sprite implements ISprite{
 
     @Override
     public void setDefaultValues() {
-        this.x = gp.WIDTH/2;
-        this.y = gp.HEIGTH/2;
         this.heigth = 400;
         this.width = 500;
         this.strength = 0;
