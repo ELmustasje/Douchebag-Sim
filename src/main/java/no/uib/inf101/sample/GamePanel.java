@@ -1,11 +1,17 @@
 package no.uib.inf101.sample;
 
+import no.uib.inf101.sample.midi.ChadSong;
 import no.uib.inf101.sample.rooms.RoomManager;
 import no.uib.inf101.sample.sprites.Sprite;
 
+import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class GamePanel extends JPanel implements Runnable{
     // SCREEN SETTINGS
@@ -15,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     MouseHandler mouseH = new MouseHandler();
     Thread gameThread;
+
     Sprite sprite = new Sprite(this,mouseH);
     RoomManager roomManager = new RoomManager(sprite,mouseH);
 
@@ -23,6 +30,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);
         this.addMouseListener(mouseH);
         this.setFocusable(true);
+        ChadSong chadSong = new ChadSong();
+        chadSong.run();
     }
 
     public void startGameThread(){
@@ -36,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable{
             update();
             repaint();
         }
+
     }
 
     public void update(){

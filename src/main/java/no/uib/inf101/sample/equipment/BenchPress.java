@@ -16,6 +16,7 @@ public class BenchPress implements IEquipment{
 
     int reps;
     int clicksForRep;
+    int repsForSet;
     int clickCount;
     int clickReverse;
     int skipFrames;
@@ -56,6 +57,7 @@ public class BenchPress implements IEquipment{
     public void resetEquipment() {
         clickReverse = 1;
         clicksForRep = 10;
+        repsForSet = 5;
         skipFrames = 0;
         finished = false;
         using = false;
@@ -130,10 +132,10 @@ public class BenchPress implements IEquipment{
 
     @Override
     public void drawStats(Graphics2D g2) {
-        int interval = 170/clicksForRep;
+        int interval = 170/(repsForSet+1);
         g2.setColor(Color.red);
         g2.drawRect(100,70+interval,40,170-interval);
-        g2.fillRect(100,240-interval*clickCount,40,interval*clickCount+1);
+        g2.fillRect(100,240-interval*reps,40,interval*reps);
         g2.drawImage(buttonImg,buttonX,buttonY,buttonWidth,buttonHeight,null);
     }
 
@@ -145,7 +147,7 @@ public class BenchPress implements IEquipment{
                 clickCount++;
                 if (clickCount == clicksForRep){
                     reps++;
-                    if(reps == 5){
+                    if(reps == repsForSet){
                         using = false;
                         finished = true;
                         reps = 0;

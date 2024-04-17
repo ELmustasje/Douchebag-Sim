@@ -3,31 +3,96 @@ package no.uib.inf101.sample.rooms;
 import no.uib.inf101.sample.MouseHandler;
 import no.uib.inf101.sample.sprites.ISprite;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class RoomManager extends JPanel{
 
     IRoom room;
     ISprite sprite;
     MouseHandler mouseHandler;
+    ArrayList<IRoom> rooms = new ArrayList<>();
+    Point nextButton;
+    Point prevButton;
+    BufferedImage roomControlButton;
+    BufferedImage roomControlButtonGlow;
+    boolean nextButtonGlow;
+    boolean prevButtonGlow;
+
+
+    int roomIndex;
 
 
     public RoomManager(ISprite sprite, MouseHandler mouseHandler) {
         this.mouseHandler = mouseHandler;
-        this.room = new RoomOne(mouseHandler);
+        rooms.add(new RoomZero(mouseHandler));
+        rooms.add(new RoomOne(mouseHandler));
+        rooms.add(new RoomTwo(mouseHandler));
+        roomIndex = 0;
+        this.room = rooms.get(roomIndex);
         this.sprite = sprite;
         room.setSpriteToRoom(sprite);
+
+        try {
+            roomControlButton = ImageIO.read(new File("res/Other/RoomButton.png"));
+            roomControlButtonGlow = ImageIO.read(new File("res/Other/RoomButtonGlow.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
     public void draw(Graphics2D g2) {
         room.drawRoom(g2);
+        if(!room.getPlot().isInUse()){
+            drawRoomControlButtons(room,g2);
+        }
     }
 
-    public void setNewRoom(IRoom room) {
-        this.room = room;
-        room.setDefaultValues();
+
+    private void drawRoomControlButtons(IRoom room, Graphics2D g2){
+        nextButton = room.getNextRoomButton();
+        prevButton = room.getPrevRoomButton();
+        if(nextButton!= null) {
+            if(nextButtonGlow){
+                g2.drawImage(roomControlButtonGlow,nextButton.x,nextButton.y,80,60,null);
+            }else {
+                g2.drawImage(roomControlButton,nextButton.x,nextButton.y,80,60,null);
+            }
+
+        }
+        if(prevButton!= null) {
+            if(prevButtonGlow){
+                g2.drawImage(roomControlButtonGlow,prevButton.x+80,prevButton.y,-80,60,null);
+            }else {
+                g2.drawImage(roomControlButton,prevButton.x+80,prevButton.y,-80,60,null);
+            }
+
+        }
+    }
+
+    boolean hoveringNextButton(){
+        return (
+                nextButton != null
+                &&mouseHandler.mouseX >= nextButton.x
+                && mouseHandler.mouseX <= nextButton.x+80
+                && mouseHandler.mouseY >= nextButton.y
+                && mouseHandler.mouseY <= nextButton.y+60
+                );
+    }
+    boolean hoveringPrevButton(){
+        return (
+                prevButton != null
+                        &&mouseHandler.mouseX >= prevButton.x
+                        && mouseHandler.mouseX <= prevButton.x+80
+                        && mouseHandler.mouseY >= prevButton.y
+                        && mouseHandler.mouseY <= prevButton.y+60
+        );
     }
 
     boolean hoveringRoomPlot(){
@@ -40,7 +105,16 @@ public class RoomManager extends JPanel{
         );
     }
 
+    void changeRoom(int deltaIndex){
+        roomIndex+=deltaIndex;
+        if(roomIndex > rooms.size()-1) roomIndex = rooms.size()-1;
+        if(roomIndex < 0) roomIndex = 0;
+        room = rooms.get(roomIndex);
+        room.setSpriteToRoom(sprite);
+    }
+
     public void update() {
+        mouseHandler.update();
         if(hoveringRoomPlot()){
             room.getPlot().hovering();
             if(mouseHandler.mousePressed && !room.getPlot().isInUse()){
@@ -61,6 +135,21 @@ public class RoomManager extends JPanel{
                 room.getPlot().resetEquipment();
                 room.getPlot().changeDifficulty(sprite);
             }
+            if(hoveringNextButton()){
+                nextButtonGlow = true;
+                if (mouseHandler.mousePressed){
+                    changeRoom(1);
+                    mouseHandler.used();
+                }
+            }else nextButtonGlow =false;
+
+            if(hoveringPrevButton()){
+                prevButtonGlow = true;
+                if(mouseHandler.mousePressed){
+                    changeRoom(-1);
+                    mouseHandler.used();
+                }
+            }else prevButtonGlow = false;
         }
         room.update();
         sprite.update();

@@ -10,5 +10,7 @@ public interface IRoom {
     void setDefaultValues();
     void setSpriteToRoom(ISprite sprite);
     void update();
+    Point getNextRoomButton();
+    Point getPrevRoomButton();
     IEquipment getPlot();
 }

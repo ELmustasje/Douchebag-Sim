@@ -45,13 +45,22 @@ public class RoomOne implements IRoom{
 
     @Override
     public void setSpriteToRoom(ISprite sprite) {
-        //to flip the image take g2.drawImage(image, x + width, y, -width, height, null);
-        sprite.setValues(GamePanel.WIDTH/2 + sprite.getWidth(),GamePanel.HEIGTH/2-150,-sprite.getWidth(),sprite.getHeight());
+        sprite.mirrorTurn(true);
+        sprite.setValues(450,170,sprite.getWidth(),sprite.getHeight());
     }
 
     @Override
     public void update() {
         plot.update();
+    }
+
+    @Override
+    public Point getNextRoomButton() {
+        return new Point(700,250);
+    }
+    @Override
+    public Point getPrevRoomButton() {
+        return new Point(50,200);
     }
 
     @Override

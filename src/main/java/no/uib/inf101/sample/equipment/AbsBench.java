@@ -18,7 +18,6 @@ public class AbsBench implements IEquipment{
     int pic;
     int slidesForSet;
     int slideCount;
-    int slideReverse;
     int skipFrames;
     int skipInterval;
 
@@ -56,10 +55,9 @@ public class AbsBench implements IEquipment{
 
     @Override
     public void resetEquipment() {
-        pic = 1;
+        pic = 10;
         buttonY = 330;
-        slideReverse = 1;
-        slidesForSet = 4;
+        slidesForSet = 5;
         skipFrames = 0;
         finished = false;
         using = false;
@@ -69,7 +67,7 @@ public class AbsBench implements IEquipment{
     @Override
     public void hovering() {
         try {
-            img = ImageIO.read(new File("res/equipment/benchpressGlow.png"));
+            img = ImageIO.read(new File("res/equipment/absBenchGlow.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -78,7 +76,7 @@ public class AbsBench implements IEquipment{
     @Override
     public void setDefaultImg() {
         try {
-            img = ImageIO.read(new File("res/equipment/benchpress.png"));
+            img = ImageIO.read(new File("res/equipment/absBench.png"));
             buttonImg  = ImageIO.read(new File("res/Other/button.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -158,7 +156,9 @@ public class AbsBench implements IEquipment{
             if(hoveringSlider() && mouseHandler.mouseHeld){
                 mouseHandler.update();
                 buttonY = mouseHandler.mouseY-buttonHeight/2;
-                pic = (buttonY)/30;
+                pic = ((buttonY)/30)-1;
+                if(pic >10) pic = 10;
+                if(pic < 0) pic = 0;
                 if (buttonY <= 70 && !awaitToGoDown){
                     awaitToGoDown = true;
                     slideCount++;
@@ -171,15 +171,17 @@ public class AbsBench implements IEquipment{
                 if (buttonY >= 330){
                     awaitToGoDown = false;
                 }
+            }else {
+                buttonY = 320;
+                pic = ((buttonY)/30)-1;
             }
 
             try {
-                img = ImageIO.read(new File("res/sprites/spriteBench/"+ (pic-1) +".png"));
+                img = ImageIO.read(new File("res/sprites/spriteAbsBench/"+ (pic) +".png"));
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
-
     }
 
     @Override

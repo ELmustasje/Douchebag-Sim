@@ -2,7 +2,6 @@ package no.uib.inf101.sample.rooms;
 
 import no.uib.inf101.sample.GamePanel;
 import no.uib.inf101.sample.MouseHandler;
-import no.uib.inf101.sample.equipment.AbsBench;
 import no.uib.inf101.sample.equipment.BenchPress;
 import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.sprites.ISprite;
@@ -13,29 +12,30 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class RoomTwo implements IRoom{
+public class RoomZero implements IRoom{
 
     BufferedImage img;
     Plot plot;
     MouseHandler mouseHandler;
 
-    public RoomTwo(MouseHandler mouseHandler){
+
+    public RoomZero(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
         setDefaultValues();
-        plot = new Plot(100,250,300,400); //add plot
-        plot.addEquiptment(new AbsBench(mouseHandler));
+        plot = new Plot(0,0,0,0);
+        plot.addEquiptment(new BenchPress(mouseHandler));
     }
 
     @Override
     public void drawRoom(Graphics2D g2) {
         g2.drawImage(img,0,0, GamePanel.WIDTH,GamePanel.HEIGTH,null);
-        plot.draw(g2);
     }
+
 
     @Override
     public void setDefaultValues() {
         try {
-            img = ImageIO.read(new File("res/rooms/roomTwo.png"));
+            img = ImageIO.read(new File("res/rooms/gymlocker.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -43,9 +43,8 @@ public class RoomTwo implements IRoom{
 
     @Override
     public void setSpriteToRoom(ISprite sprite) {
-        sprite.mirrorTurn(true);
-        sprite.setValues(370,150,sprite.getWidth(),sprite.getHeight());
-
+        sprite.mirrorTurn(false);
+        sprite.setValues(100,200,sprite.getWidth(),sprite.getHeight());
     }
 
     @Override
@@ -55,13 +54,11 @@ public class RoomTwo implements IRoom{
 
     @Override
     public Point getNextRoomButton() {
-        return null;
-        //return new Point(425,90);
+        return new Point(700,250);
     }
-
     @Override
     public Point getPrevRoomButton() {
-        return new Point(50,200);
+        return null;
     }
 
     @Override

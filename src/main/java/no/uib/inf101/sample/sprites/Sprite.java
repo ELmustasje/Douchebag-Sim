@@ -16,6 +16,7 @@ public class Sprite implements ISprite{
     int heigth;
     int width;
     int strength;
+    boolean mirrored;
 
 
     GamePanel gp;
@@ -36,7 +37,13 @@ public class Sprite implements ISprite{
 
     @Override
     public void drawSprite(Graphics2D g2) {
-        g2.drawImage(drawingImg,x,y,width,heigth,null);
+        if(mirrored){
+            g2.drawImage(drawingImg,x+width,y,-width,heigth,null);
+        }else {
+            g2.drawImage(drawingImg,x,y,width,heigth,null);
+        }
+
+
         drawStats(g2);
 
     }
@@ -49,8 +56,9 @@ public class Sprite implements ISprite{
     @Override
     public void setDefaultValues() {
         this.heigth = 400;
-        this.width = 500;
+        this.width = 150;
         this.strength = 0;
+        mirrored = false;
         try {
             currentImg = ImageIO.read(new File("res/sprites/spriteDefault.png"));
             bisepForStat = ImageIO.read(new File("res/Other/BisepForStats.png"));
@@ -80,6 +88,11 @@ public class Sprite implements ISprite{
     @Override
     public int getStrength() {
         return strength;
+    }
+
+    @Override
+    public void mirrorTurn(boolean turn) {
+        mirrored = turn;
     }
 
     @Override

@@ -10,6 +10,7 @@ public interface ISprite {
     int getWidth();
     int getHeight();
     int getStrength();
+    void mirrorTurn(boolean turn);
     void updateStrength(int deltaStrength);
     void stopDrawing();
     void startDrawing();
