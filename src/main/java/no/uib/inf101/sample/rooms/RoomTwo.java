@@ -55,8 +55,7 @@ public class RoomTwo implements IRoom{
 
     @Override
     public Point getNextRoomButton() {
-        return null;
-        //return new Point(425,90);
+        return new Point(390,90);
     }
 
     @Override

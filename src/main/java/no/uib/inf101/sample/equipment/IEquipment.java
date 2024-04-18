@@ -14,6 +14,7 @@ public interface IEquipment {
     void hovering();
     void setDefaultImg();
     int getHeigth();
+    int getSkipInterval();
     int getWidth();
     int getY();
     int getX();

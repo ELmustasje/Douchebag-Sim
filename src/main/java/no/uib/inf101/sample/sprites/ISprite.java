@@ -10,9 +10,12 @@ public interface ISprite {
     int getWidth();
     int getHeight();
     int getStrength();
+    int getX();
+    int getY();
     void mirrorTurn(boolean turn);
     void updateStrength(int deltaStrength);
     void stopDrawing();
     void startDrawing();
+    boolean isMirrored();
     void drawStats(Graphics2D g2);
 }

@@ -91,6 +91,16 @@ public class Sprite implements ISprite{
     }
 
     @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    @Override
     public void mirrorTurn(boolean turn) {
         mirrored = turn;
     }
@@ -112,6 +122,11 @@ public class Sprite implements ISprite{
     @Override
     public void startDrawing() {
         drawingImg = currentImg;
+    }
+
+    @Override
+    public boolean isMirrored() {
+        return mirrored;
     }
 
     @Override

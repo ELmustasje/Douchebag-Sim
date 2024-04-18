@@ -7,7 +7,6 @@ import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.sprites.ISprite;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

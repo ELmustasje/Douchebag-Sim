@@ -95,6 +95,11 @@ public class BenchPress implements IEquipment{
     }
 
     @Override
+    public int getSkipInterval() {
+        return skipInterval;
+    }
+
+    @Override
     public int getWidth() {
         return width;
     }
