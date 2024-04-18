@@ -1,4 +1,4 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.sprites;
 
 import no.uib.inf101.sample.sprites.ISprite;
 import no.uib.inf101.sample.sprites.Sprite;

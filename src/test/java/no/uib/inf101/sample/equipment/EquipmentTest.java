@@ -1,4 +1,4 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.equipment;
 import static org.junit.jupiter.api.Assertions.*;
 
 import no.uib.inf101.sample.equipment.BenchPress;

@@ -1,4 +1,4 @@
-package no.uib.inf101.sample;
+package no.uib.inf101.sample.rooms;
 
 import no.uib.inf101.sample.equipment.AbsBench;
 import no.uib.inf101.sample.equipment.BenchPress;

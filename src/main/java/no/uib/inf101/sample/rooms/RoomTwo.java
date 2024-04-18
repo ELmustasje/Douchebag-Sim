@@ -3,7 +3,6 @@ package no.uib.inf101.sample.rooms;
 import no.uib.inf101.sample.GamePanel;
 import no.uib.inf101.sample.MouseHandler;
 import no.uib.inf101.sample.equipment.AbsBench;
-import no.uib.inf101.sample.equipment.BenchPress;
 import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.sprites.ISprite;
 
@@ -22,7 +21,7 @@ public class RoomTwo implements IRoom{
     public RoomTwo(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
         setDefaultValues();
-        plot = new Plot(100,250,300,400); //add plot
+        plot = new Plot(100,250,300,400);
         plot.addEquiptment(new AbsBench(mouseHandler));
     }
 
