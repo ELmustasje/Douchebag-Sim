@@ -111,6 +111,9 @@ public class Sprite implements ISprite{
         if(strength > 10){
             strength = 10;
         }
+        if (strength < 0){
+            strength = 0;
+        }
 
     }
 
