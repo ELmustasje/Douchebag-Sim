@@ -90,7 +90,7 @@ public class AbsBench implements IEquipment{
     }
 
     @Override
-    public int getHeigth() {
+    public int getHeight() {
         return height;
     }
 

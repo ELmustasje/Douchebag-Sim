@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class RoomManager extends JPanel{
+public class RoomManager{
 
     IRoom room;
     ISprite sprite;
@@ -33,7 +33,8 @@ public class RoomManager extends JPanel{
         rooms.add(new RoomZero(mouseHandler));
         rooms.add(new RoomOne(mouseHandler));
         rooms.add(new RoomTwo(mouseHandler));
-        roomIndex = 0;
+        rooms.add(new RoomThree(mouseHandler));
+        roomIndex = 3;
         this.room = rooms.get(roomIndex);
         this.sprite = sprite;
         room.setSpriteToRoom(sprite);
@@ -100,8 +101,8 @@ public class RoomManager extends JPanel{
         return (
                 mouseHandler.mouseX >= room.getPlot().getX() + room.getPlot().getWidth()/margin
                 && mouseHandler.mouseX <= room.getPlot().getX() + room.getPlot().getWidth() - room.getPlot().getWidth()/margin
-                && mouseHandler.mouseY >= room.getPlot().getY() + room.getPlot().getHeigth()/margin
-                && mouseHandler.mouseY <= room.getPlot().getY() +room.getPlot().getHeigth() - room.getPlot().getHeigth()/margin
+                && mouseHandler.mouseY >= room.getPlot().getY() + room.getPlot().getHeight()/margin
+                && mouseHandler.mouseY <= room.getPlot().getY() +room.getPlot().getHeight() - room.getPlot().getHeight()/margin
         );
     }
 
@@ -115,9 +116,9 @@ public class RoomManager extends JPanel{
 
     public void update() {
         mouseHandler.update();
-        if(hoveringRoomPlot()){
+        if(hoveringRoomPlot()&&!room.getPlot().isInUse()){
             room.getPlot().hovering();
-            if(mouseHandler.mousePressed && !room.getPlot().isInUse()){
+            if(mouseHandler.mousePressed){
                 room.getPlot().use();
             }
         }else {
@@ -131,7 +132,11 @@ public class RoomManager extends JPanel{
             sprite.startDrawing();
 
             if (room.getPlot().successfulSet()){
-                sprite.updateStrength(1);
+                if(room instanceof RoomThree){
+                    sprite.updateStrength(-3);
+                }else {
+                    sprite.updateStrength(1);
+                }
                 room.getPlot().resetEquipment();
                 room.getPlot().changeDifficulty(sprite);
             }

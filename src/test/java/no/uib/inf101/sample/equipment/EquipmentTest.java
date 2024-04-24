@@ -1,8 +1,6 @@
 package no.uib.inf101.sample.equipment;
 import static org.junit.jupiter.api.Assertions.*;
 
-import no.uib.inf101.sample.equipment.BenchPress;
-import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.rooms.Plot;
 import no.uib.inf101.sample.sprites.Sprite;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,7 @@ public class EquipmentTest {
         IEquipment bench = new BenchPress(null);
         bench.addToPlot(p1);
         assertEquals(new Point(p1.getX(),p1.getY()),new Point(bench.getX(),bench.getY()));
-        assertEquals(new Point(p1.getWidth(),p1.getHeigth()), new Point(bench.getWidth(),bench.getHeigth()));
+        assertEquals(new Point(p1.getWidth(),p1.getHeigth()), new Point(bench.getWidth(),bench.getHeight()));
     }
 
     @Test

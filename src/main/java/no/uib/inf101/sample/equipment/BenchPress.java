@@ -90,7 +90,7 @@ public class BenchPress implements IEquipment{
     }
 
     @Override
-    public int getHeigth() {
+    public int getHeight() {
         return height;
     }
 
