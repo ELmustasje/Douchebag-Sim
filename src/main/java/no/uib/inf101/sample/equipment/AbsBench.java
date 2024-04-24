@@ -83,7 +83,7 @@ public class AbsBench implements IEquipment{
         }
     }
 
-    public boolean hoveringSlider() {
+    private boolean hoveringSlider() {
         mouseHandler.update();
         return mouseHandler.mouseX >= buttonX && mouseHandler.mouseX <= buttonX + buttonWidth
                 && mouseHandler.mouseY >= buttonY && mouseHandler.mouseY <= buttonY + buttonHeight;

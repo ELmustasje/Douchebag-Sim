@@ -83,7 +83,7 @@ public class BenchPress implements IEquipment{
         }
     }
 
-    public boolean hoveringButton() {
+    private boolean hoveringButton() {
         mouseHandler.update();
         return mouseHandler.mouseX >= buttonX && mouseHandler.mouseX <= buttonX + buttonWidth
                 && mouseHandler.mouseY >= buttonY && mouseHandler.mouseY <= buttonY + buttonHeight;

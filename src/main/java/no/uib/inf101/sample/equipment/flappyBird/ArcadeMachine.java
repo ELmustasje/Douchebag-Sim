@@ -1,7 +1,7 @@
-package no.uib.inf101.sample.equipment;
+package no.uib.inf101.sample.equipment.flappyBird;
 
 import no.uib.inf101.sample.MouseHandler;
-import no.uib.inf101.sample.equipment.flappyBird.FlappyBird;
+import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.rooms.Plot;
 import no.uib.inf101.sample.sprites.ISprite;
 
@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ArcadeMachine implements IEquipment{
+public class ArcadeMachine implements IEquipment {
 
     int x;
     int y;

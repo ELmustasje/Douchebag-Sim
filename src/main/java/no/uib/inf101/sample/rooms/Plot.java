@@ -30,18 +30,18 @@ public class Plot {
         return width;
     }
 
-    void addEquiptment(IEquipment equipment){
+    public void addEquiptment(IEquipment equipment){
         this.equipment = equipment;
         equipment.addToPlot(this);
     }
 
-    void draw(Graphics2D g2){
+    public void draw(Graphics2D g2){
         if(equipment == null){
             return;
         }
         equipment.draw(g2);
     }
-    void update(){
+    public void update(){
         equipment.update();
     }
 

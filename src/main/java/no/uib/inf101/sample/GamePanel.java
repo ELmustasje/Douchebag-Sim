@@ -43,16 +43,13 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-
-
-
         while (gameThread != null) {
             update();
             repaint();
         }
     }
 
-    public void update(){
+    private void update(){
         if (mouseH.mousePressed){
             roomManager.update();
             mouseH.update();
@@ -65,7 +62,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
 
-    public void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         roomManager.draw(g2);

@@ -23,8 +23,6 @@ public class RoomManager{
     BufferedImage roomControlButtonGlow;
     boolean nextButtonGlow;
     boolean prevButtonGlow;
-
-
     int roomIndex;
 
 
@@ -34,7 +32,7 @@ public class RoomManager{
         rooms.add(new RoomOne(mouseHandler));
         rooms.add(new RoomTwo(mouseHandler));
         rooms.add(new RoomThree(mouseHandler));
-        roomIndex = 3;
+        roomIndex = 0;
         this.room = rooms.get(roomIndex);
         this.sprite = sprite;
         room.setSpriteToRoom(sprite);
@@ -77,7 +75,7 @@ public class RoomManager{
         }
     }
 
-    boolean hoveringNextButton(){
+    private boolean hoveringNextButton(){
         return (
                 nextButton != null
                 &&mouseHandler.mouseX >= nextButton.x
@@ -86,7 +84,7 @@ public class RoomManager{
                 && mouseHandler.mouseY <= nextButton.y+60
                 );
     }
-    boolean hoveringPrevButton(){
+    private boolean hoveringPrevButton(){
         return (
                 prevButton != null
                         &&mouseHandler.mouseX >= prevButton.x
@@ -96,7 +94,7 @@ public class RoomManager{
         );
     }
 
-    boolean hoveringRoomPlot(){
+    private boolean hoveringRoomPlot(){
         int margin = 4;
         return (
                 mouseHandler.mouseX >= room.getPlot().getX() + room.getPlot().getWidth()/margin
@@ -106,7 +104,7 @@ public class RoomManager{
         );
     }
 
-    void changeRoom(int deltaIndex){
+    private void changeRoom(int deltaIndex){
         roomIndex+=deltaIndex;
         if(roomIndex > rooms.size()-1) roomIndex = rooms.size()-1;
         if(roomIndex < 0) roomIndex = 0;

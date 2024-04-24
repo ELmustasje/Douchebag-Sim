@@ -37,8 +37,8 @@ public class FlappyBird {
 
     public FlappyBird(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
-
         reset();
+
         try {
             backgroundImg = ImageIO.read(new File("res/flappyBird/flappyBirdBackground.png"));
             STARTtxt = ImageIO.read(new File("res/Other/Starttxt.png"));
@@ -50,14 +50,14 @@ public class FlappyBird {
         }
     }
 
-    public int getScore(){
+    protected int getScore(){
         return score;
     }
-    public boolean isRunning(){
+    protected boolean isRunning(){
         return running;
     }
 
-    public void reset(){
+    protected void reset(){
         done = false;
         score =0;
         speed = 2;
@@ -74,21 +74,21 @@ public class FlappyBird {
 
     }
 
-    private void run(){
+    protected void run(){
         done = false;
         running = true;
     }
-    public boolean done(){
+    protected boolean done(){
         return done;
     }
 
-    public void draw(Graphics2D g2){
+    protected void draw(Graphics2D g2){
         drawGame(g2,150,151,530,214);
         g2.drawImage(backgroundImg,0,0, GamePanel.WIDTH,GamePanel.HEIGTH,null);
     }
 
 
-    private void drawGame(Graphics2D g2, int gameX, int gameY, int gameWidth, int gameHeigth){
+    protected void drawGame(Graphics2D g2, int gameX, int gameY, int gameWidth, int gameHeigth){
         this.gameX = gameX;
         this.gameY = gameY;
         this.gameHeigth = gameHeigth;
@@ -143,7 +143,7 @@ public class FlappyBird {
                 );
     }
 
-    public void update(){
+    protected void update(){
         // gameLoop Hentet fra: https://gamedev.stackexchange.com/questions/160329/java-game-loop-efficiency
         // Opphaver: Zerro97. Hentet: 24.04.24
 
@@ -190,7 +190,7 @@ public class FlappyBird {
                 try {
                     Thread.sleep(wait);
                 } catch (Exception e) {
-
+                    System.out.println("thread cant sleep");
                 }
             }
         }else {

@@ -32,14 +32,14 @@ public class Obsticle {
             throw new RuntimeException(e);
         }
     }
-    public void update(){
+    protected void update(){
         x-= game.speed;
         if(x < 100){
             x =870;
             height = random.nextInt(20,120);
         }
     }
-    public void draw(Graphics2D g2){
+    protected void draw(Graphics2D g2){
         g2.setColor(Color.black);
         g2.fillRect(x,y,width,height);
         g2.fillRect(x,y+opening+height,width,200);

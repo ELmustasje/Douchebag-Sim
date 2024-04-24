@@ -41,6 +41,7 @@ public class Bird {
     public void jump(){
         speedY = -jumpPower;
     }
+
     public void update(){
         speedY += gravity;
         y+= speedY;

@@ -19,7 +19,7 @@ public class ChadSong implements Runnable {
 
     public ChadSong(){
         try {
-            song = new FileInputStream(new File("res/Other/chadSong.mid"));
+            song = new FileInputStream("res/Other/chadSong.mid");
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

@@ -2,8 +2,7 @@ package no.uib.inf101.sample.rooms;
 
 import no.uib.inf101.sample.GamePanel;
 import no.uib.inf101.sample.MouseHandler;
-import no.uib.inf101.sample.equipment.ArcadeMachine;
-import no.uib.inf101.sample.equipment.BenchPress;
+import no.uib.inf101.sample.equipment.flappyBird.ArcadeMachine;
 import no.uib.inf101.sample.equipment.IEquipment;
 import no.uib.inf101.sample.sprites.ISprite;
 
