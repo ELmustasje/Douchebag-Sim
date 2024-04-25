@@ -1,12 +1,9 @@
 package no.uib.inf101.sample.equipment.flappyBird;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import no.uib.inf101.sample.rooms.Plot;
-import no.uib.inf101.sample.sprites.Sprite;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;public class FlappyBirdTest {
+public class FlappyBirdTest {
 
     @Test
     void testGetScore(){
