@@ -14,10 +14,15 @@ import java.io.IOException;
 
 public class RoomTwo implements IRoom{
 
-    BufferedImage img;
-    Plot plot;
-    MouseHandler mouseHandler;
+    private BufferedImage img;
+    private Plot plot;
+    private MouseHandler mouseHandler;
 
+    /**
+     * Constructor for RoomTwo. It initializes the room with default values and sets up the plot with equipment.
+     *
+     * @param mouseHandler The MouseHandler instance for managing mouse events.
+     */
     public RoomTwo(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
         setDefaultValues();
@@ -27,7 +32,7 @@ public class RoomTwo implements IRoom{
 
     @Override
     public void drawRoom(Graphics2D g2) {
-        g2.drawImage(img,0,0, GamePanel.WIDTH,GamePanel.HEIGTH,null);
+        g2.drawImage(img,0,0, GamePanel.WIDTH,GamePanel.HEIGHT,null);
         plot.draw(g2);
     }
 

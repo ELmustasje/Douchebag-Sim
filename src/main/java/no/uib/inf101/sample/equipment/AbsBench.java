@@ -6,28 +6,33 @@ import no.uib.inf101.sample.sprites.ISprite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The AbsBench class implements the IEquipment interface and represents an abdominal bench equipment in the game.
+ * It manages the equipment's state, including the number of slides for a set, and interaction with the mouse.
+ */
 public class AbsBench implements IEquipment{
 
-    int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
+    private int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
 
-    int pic;
-    int slidesForSet;
-    int slideCount;
-    int skipFrames;
-    int skipInterval;
+    private int pic, slidesForSet, slideCount, skipFrames, skipInterval;
 
-    boolean using;
-    boolean finished;
-    boolean awaitToGoDown;
-    BufferedImage img;
-    BufferedImage buttonImg;
-    MouseHandler mouseHandler;
+    private boolean using, finished,awaitToGoDown;
 
+    private BufferedImage img, buttonImg;
+
+    private MouseHandler mouseHandler;
+
+    /**
+     * Constructs an AbsBench object with a reference to the MouseHandler.
+     * It initializes the button position, size, and skip interval for the equipment,
+     * and sets the equipment to its default state.
+     *
+     * @param mouseHandler The MouseHandler instance for managing mouse events related to the AbsBench.
+     */
     public AbsBench(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
         buttonX = 85;
@@ -119,7 +124,7 @@ public class AbsBench implements IEquipment{
         this.x = plot.getX();
         this.y = plot.getY();
         this.width = plot.getWidth();
-        this.height = plot.getHeigth();
+        this.height = plot.getHeight();
     }
 
     @Override

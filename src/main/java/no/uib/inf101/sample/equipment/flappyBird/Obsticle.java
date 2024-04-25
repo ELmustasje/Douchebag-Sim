@@ -7,39 +7,53 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * The Obsticle class represents an obstacle (pipe) in the Flappy Bird mini-game.
+ * It handles the obstacle's position, movement, and rendering.
+ */
 public class Obsticle {
-    int x;
-    int y;
-    int height;
-    int width;
-    int opening = 70;
-    Random random;
-    FlappyBird game;
-    BufferedImage pipeDown;
-    BufferedImage pipeUp;
+    protected int x; // The x-coordinate of the obstacle's position
+    protected int y; // The y-coordinate of the obstacle's position
+    protected int height; // The height of the obstacle
+    protected int width; // The width of the obstacle
+    protected int opening = 70; // The vertical opening between the top and bottom parts of the obstacle
+    private Random random; // Random number generator for obstacle height
+    private FlappyBird game; // Reference to the FlappyBird game instance
 
-    public Obsticle(int x,FlappyBird game){
+    /**
+     * Constructs an Obsticle object with a specified x-coordinate and a reference to the FlappyBird game.
+     * It initializes the obstacle's position, size, and loads the images for the top and bottom parts.
+     *
+     * @param x The initial x-coordinate of the obstacle.
+     * @param game The FlappyBird game instance that this obstacle is part of.
+     */
+    public Obsticle(int x, FlappyBird game) {
         this.game = game;
         random = new Random();
         this.x = x;
-        y = 150;
-        width = 25;
-        height = random.nextInt(20,120);
-        try {
-            pipeDown = ImageIO.read(new File("res/flappyBird/pipeDown.png"));
-            pipeUp = ImageIO.read(new File("res/flappyBird/pipeUp.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        y = 150; // Default y-coordinate for the top part of the obstacle
+        width = 25; // Default width of the obstacle
+        height = random.nextInt(20, 120); // Random height for the top part of the obstacle
+    }
+
+    /**
+     * Updates the obstacle's position based on the game's speed.
+     * Resets the obstacle's position and height when it moves off-screen.
+     */
+    protected void update() {
+        x -= game.getSpeed();
+        if (x < 100) {
+            x = 870; // Reset x-coordinate to the right side of the screen
+            height = random.nextInt(20, 120); // Generate a new random height for the top part
         }
     }
-    protected void update(){
-        x-= game.speed;
-        if(x < 100){
-            x =870;
-            height = random.nextInt(20,120);
-        }
-    }
-    protected void draw(Graphics2D g2){
+
+    /**
+     * Draws the obstacle on the provided Graphics2D context.
+     *
+     * @param g2 The Graphics2D object used for drawing operations.
+     */
+    protected void draw(Graphics2D g2) {
         g2.setColor(Color.black);
         g2.fillRect(x,y,width,height);
         g2.fillRect(x,y+opening+height,width,200);

@@ -35,4 +35,23 @@ public class SpriteTest {
         sprite.updateStrength(999);
         assertEquals(10,sprite.getStrength());
     }
+
+    @Test
+    void testGetValues(){
+        ISprite sprite = new Sprite(null,null);
+        sprite.setValues(1,2,3,4);
+        assertEquals(1,sprite.getX());
+        assertEquals(2,sprite.getY());
+        assertEquals(3,sprite.getWidth());
+        assertEquals(4,sprite.getHeight());
+    }
+
+    @Test
+    void testMirrorTurnAndIsMirrored(){
+        ISprite sprite = new Sprite(null,null);
+        sprite.setDefaultValues();
+        assertFalse(sprite.isMirrored());
+        sprite.mirrorTurn(true);
+        assertTrue(sprite.isMirrored());
+    }
 }

@@ -11,21 +11,27 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sprite implements ISprite{
-    int x;
-    int y;
-    int heigth;
-    int width;
-    int strength;
-    boolean mirrored;
+    private int x;
+    private int y;
+    private int heigth;
+    private int width;
+    private int strength;
+    private boolean mirrored;
 
 
-    GamePanel gp;
-    MouseHandler mouseH;
-    BufferedImage currentImg;
-    BufferedImage drawingImg;
-    BufferedImage bisepForStat;
+    private GamePanel gp;
+    private MouseHandler mouseH;
+    private BufferedImage currentImg;
+    private BufferedImage drawingImg;
+    private BufferedImage bisepForStat;
 
-
+    /**
+     * Constructs a Sprite object with a reference to the GamePanel and MouseHandler.
+     * It initializes the sprite with default values and sets the initial image for drawing.
+     *
+     * @param gp     The GamePanel instance which the sprite is part of.
+     * @param mouseH The MouseHandler instance for managing mouse events related to the sprite.
+     */
     public Sprite(GamePanel gp, MouseHandler mouseH){
         this.gp = gp;
         this.mouseH = mouseH;
@@ -45,11 +51,6 @@ public class Sprite implements ISprite{
 
 
         drawStats(g2);
-
-    }
-
-    @Override
-    public void update() {
 
     }
 

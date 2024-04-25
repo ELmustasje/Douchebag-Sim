@@ -11,21 +11,26 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The ArcadeMachine class implements the IEquipment interface and represents an arcade machine in the game.
+ * It encapsulates the functionality of an in-game arcade machine, such as playing a mini-game like Flappy Bird.
+ */
 public class ArcadeMachine implements IEquipment {
 
-    int x;
-    int y;
-    int width;
-    int height;
-    boolean overTen;
-    FlappyBird flappyBird;
-    BufferedImage img;
-    MouseHandler mouseHandler;
-    boolean using;
+    private int x, y, width, height;
 
+    private boolean overTen, using;
+    private FlappyBird flappyBird;
+    private BufferedImage img;
+
+    /**
+     * Constructs an ArcadeMachine object with a reference to the MouseHandler.
+     * It initializes the FlappyBird mini-game and sets the arcade machine to its default state.
+     *
+     * @param mouseHandler The MouseHandler instance for managing mouse events related to the ArcadeMachine.
+     */
     public ArcadeMachine(MouseHandler mouseHandler){
         flappyBird = new FlappyBird(mouseHandler);
-        this.mouseHandler = mouseHandler;
         resetEquipment();
     }
 
@@ -101,7 +106,7 @@ public class ArcadeMachine implements IEquipment {
         this.x = plot.getX();
         this.y = plot.getY();
         this.width = plot.getWidth();
-        this.height = plot.getHeigth();
+        this.height = plot.getHeight();
     }
 
     @Override

@@ -10,24 +10,29 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The BenchPress class implements the IEquipment interface and represents a bench press equipment in the game.
+ * It manages the equipment's state, including the number of repetitions, sets, and interaction with the mouse.
+ */
 public class BenchPress implements IEquipment{
 
-    int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
+    private int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
 
-    int reps;
-    int clicksForRep;
-    int repsForSet;
-    int clickCount;
-    int clickReverse;
-    int skipFrames;
-    int skipInterval;
+    private int reps,clicksForRep,repsForSet,clickCount,clickReverse,skipFrames,skipInterval;
 
-    boolean using;
-    boolean finished;
-    BufferedImage img;
-    BufferedImage buttonImg;
-    MouseHandler mouseHandler;
+    private boolean using, finished;
 
+    private BufferedImage img,buttonImg;
+
+    private MouseHandler mouseHandler;
+
+    /**
+     * Constructs a BenchPress object with a reference to the MouseHandler.
+     * It initializes the button position, size, and skip interval for the equipment,
+     * and sets the equipment to its default state.
+     *
+     * @param mouseHandler The MouseHandler instance for managing mouse events related to the BenchPress.
+     */
     public BenchPress(MouseHandler mouseHandler){
         this.mouseHandler = mouseHandler;
         buttonX = 80;
@@ -119,7 +124,7 @@ public class BenchPress implements IEquipment{
         this.x = plot.getX();
         this.y = plot.getY();
         this.width = plot.getWidth();
-        this.height = plot.getHeigth();
+        this.height = plot.getHeight();
     }
 
     @Override

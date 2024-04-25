@@ -10,166 +10,228 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * The FlappyBird class encapsulates the game logic, rendering, and state management for the Flappy Bird mini-game.
+ */
 public class FlappyBird {
-    Obsticle obs2;
-    Obsticle obs1;
-    Obsticle obs3;
-    Obsticle obs4;
-    ArrayList<Obsticle> queue;
-    Bird bird;
-    BufferedImage backgroundImg;
-    BufferedImage STARTtxt;
+    private Obsticle obs1, obs2, obs3, obs4; // Obstacles in the game
+    private ArrayList<Obsticle> queue; // Queue to manage the obstacles
 
-    BufferedImage quitButton;
-    BufferedImage quitButtonGlow;
+    private Bird bird; // The player-controlled bird
+    private BufferedImage backgroundImg, STARTtxt, quitButton, quitButtonGlow; // Images for the game's background and UI elements
 
-    MouseHandler mouseHandler;
-    boolean running;
-    boolean done;
+    private MouseHandler mouseHandler; // The MouseHandler for managing mouse interactions
+    private boolean running, done; // Flags to track the game's running state and completion
 
-    int gameX;
-    int gameY;
-    int gameWidth;
-    int gameHeigth;
-    int score;
-    double speed;
+    private int gameX, gameY, gameWidth, gameHeigth, score; // Game area dimensions and score
+    private double speed; // Speed of the obstacles
 
-    public FlappyBird(MouseHandler mouseHandler){
+    /**
+     * Constructs a FlappyBird game instance with a reference to the MouseHandler.
+     * It initializes the game's state and loads necessary images.
+     *
+     * @param mouseHandler The MouseHandler instance for managing mouse events related to FlappyBird.
+     */
+    public FlappyBird(MouseHandler mouseHandler) {
         this.mouseHandler = mouseHandler;
         reset();
-
         try {
             backgroundImg = ImageIO.read(new File("res/flappyBird/flappyBirdBackground.png"));
             STARTtxt = ImageIO.read(new File("res/Other/Starttxt.png"));
-            quitButton =ImageIO.read(new File("res/Other/quitbutton.png"));
-            quitButtonGlow =ImageIO.read(new File("res/Other/quitbuttonglow.png"));
-
+            quitButton = ImageIO.read(new File("res/Other/quitbutton.png"));
+            quitButtonGlow = ImageIO.read(new File("res/Other/quitbuttonglow.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected int getScore(){
+    /**
+     * Gets the current score of the game.
+     *
+     * @return The current score.
+     */
+    protected int getScore() {
         return score;
     }
-    protected boolean isRunning(){
+
+    /**
+     * Checks if the game is currently running.
+     *
+     * @return true if the game is running, false otherwise.
+     */
+    protected boolean isRunning() {
         return running;
     }
 
-    protected void reset(){
+    /**
+     * Gets the speed of the obstacles in the game.
+     *
+     * @return The speed of the obstacles.
+     */
+    protected double getSpeed() {
+        return speed;
+    }
+
+    /**
+     * Gets the height of the game area.
+     *
+     * @return The height of the game area.
+     */
+    protected int getGameHeigth() {
+        return gameHeigth;
+    }
+
+    /**
+     * Gets the y-coordinate of the game area's position.
+     *
+     * @return The y-coordinate of the game area.
+     */
+    protected int getGameY() {
+        return gameY;
+    }
+
+    /**
+     * Resets the game to its initial state, reinitializing the bird, obstacles, and score.
+     */
+    protected void reset() {
+        running = false;
         done = false;
-        score =0;
+        score = 0;
         speed = 2;
         bird = new Bird();
-        obs1 = new Obsticle(670,this);
-        obs2 = new Obsticle(870,this);
-        obs3 = new Obsticle(1070,this);
-        obs4 = new Obsticle(1270,this);
+        obs1 = new Obsticle(670, this);
+        obs2 = new Obsticle(870, this);
+        obs3 = new Obsticle(1070, this);
+        obs4 = new Obsticle(1270, this);
         queue = new ArrayList<>();
         queue.add(obs1);
         queue.add(obs2);
         queue.add(obs3);
         queue.add(obs4);
-
+        gameX = 150;
+        gameY = 151;
+        gameHeigth = 214;
+        gameWidth = 530;
     }
 
-    protected void run(){
+    /**
+     * Starts the game by setting the running flag to true and the done flag to false.
+     * This method should be called when the game is initialized or restarted.
+     */
+    protected void run() {
         done = false;
         running = true;
     }
-    protected boolean done(){
+
+    /**
+     * Checks if the game has been completed or exited.
+     *
+     * @return true if the game is done, false otherwise.
+     */
+    protected boolean done() {
         return done;
     }
 
-    protected void draw(Graphics2D g2){
-        drawGame(g2,150,151,530,214);
-        g2.drawImage(backgroundImg,0,0, GamePanel.WIDTH,GamePanel.HEIGTH,null);
+    /**
+     * Draws the game and its elements on the provided Graphics2D context.
+     *
+     * @param g2 The Graphics2D object used for drawing operations.
+     */
+
+    protected void draw(Graphics2D g2) {
+        drawGame(g2);
+        g2.drawImage(backgroundImg, 0, 0, GamePanel.WIDTH, GamePanel.HEIGHT, null);
     }
 
 
-    protected void drawGame(Graphics2D g2, int gameX, int gameY, int gameWidth, int gameHeigth){
-        this.gameX = gameX;
-        this.gameY = gameY;
-        this.gameHeigth = gameHeigth;
-        this.gameWidth = gameWidth;
+private void drawGame(Graphics2D g2) {
+    // Draw the game area
+    g2.setColor(Color.green);
+    g2.fillRect(gameX, gameY, gameWidth, gameHeigth);
 
+    // Draw the bird and obstacles
+    bird.draw(g2);
+    for (Obsticle obs : queue) {
+        obs.draw(g2);
+    }
 
-        g2.setColor(Color.green);
-        g2.fillRect(gameX,gameY,gameWidth,gameHeigth);
-        bird.draw(g2);
-        obs1.draw(g2);
-        obs2.draw(g2);
-        obs3.draw(g2);
-        obs4.draw(g2);
+    // Draw the score
+    g2.setFont(new Font("_", Font.PLAIN, 30));
+    g2.drawString(String.valueOf(score), gameX + 25, gameY + 35);
 
-        g2.setFont(new Font("_", Font.PLAIN, 30));
-        g2.drawString(String.valueOf(score),gameX + 25, gameY + 35);
-
-        if(!running){
-            g2.setColor(Color.CYAN);
-            g2.fillRect(gameX + gameWidth/3, gameY + gameHeigth/3, gameWidth/3, gameHeigth/3);
-            g2.drawImage(STARTtxt,gameX + gameWidth/3, gameY + gameHeigth/3, gameWidth/3, gameHeigth/3,null);
-            if(!hoveringExitButton()){
-                g2.drawImage(quitButton,gameX+gameWidth - 42,gameY + 5,25,25,null);
-            }else {
-                g2.drawImage(quitButtonGlow,gameX+gameWidth - 42,gameY + 5,25,25,null);
-            }
+    // Draw the start and quit buttons when the game is not running
+    if (!running) {
+        g2.setColor(Color.CYAN);
+        g2.fillRect(gameX + gameWidth / 3, gameY + gameHeigth / 3, gameWidth / 3, gameHeigth / 3);
+        g2.drawImage(STARTtxt, gameX + gameWidth / 3, gameY + gameHeigth / 3, gameWidth / 3, gameHeigth / 3, null);
+        if (!hoveringExitButton()) {
+            g2.drawImage(quitButton, gameX + gameWidth - 42, gameY + 5, 25, 25, null);
+        } else {
+            g2.drawImage(quitButtonGlow, gameX + gameWidth - 42, gameY + 5, 25, 25, null);
         }
     }
-    private boolean mouseInsideGame(){
+}
+
+
+    private boolean mouseInsideGame() {
         return (
-                mouseHandler.mouseX > gameX
-                && mouseHandler.mouseX < gameX + gameWidth
-                && mouseHandler.mouseY > gameY
-                && mouseHandler.mouseY < gameY + gameHeigth
-                );
+                mouseHandler.mouseX > gameX &&
+                        mouseHandler.mouseX < gameX + gameWidth &&
+                        mouseHandler.mouseY > gameY &&
+                        mouseHandler.mouseY < gameY + gameHeigth
+        );
     }
 
-    private boolean hoveringStartButton(){
+
+    private boolean hoveringStartButton() {
         return (
-                mouseHandler.mouseX > gameX + gameWidth/3
-                && mouseHandler.mouseX < gameX+((gameWidth/3)*2)
-                && mouseHandler.mouseY > gameY + gameHeigth/3
-                && mouseHandler.mouseY < gameY+((gameHeigth/3)*2)
-                );
-    }
-    private boolean hoveringExitButton(){
-        return (
-                mouseHandler.mouseX >gameX+gameWidth - 42
-                &&mouseHandler.mouseX <gameX+gameWidth - 42 + 25
-                &&mouseHandler.mouseY >gameY + 5
-                &&mouseHandler.mouseY < gameY + 30
-                );
+                mouseHandler.mouseX > gameX + gameWidth / 3 &&
+                        mouseHandler.mouseX < gameX + ((gameWidth / 3) * 2) &&
+                        mouseHandler.mouseY > gameY + gameHeigth / 3 &&
+                        mouseHandler.mouseY < gameY + ((gameHeigth / 3) * 2)
+        );
     }
 
-    protected void update(){
-        // gameLoop Hentet fra: https://gamedev.stackexchange.com/questions/160329/java-game-loop-efficiency
-        // Opphaver: Zerro97. Hentet: 24.04.24
+
+    private boolean hoveringExitButton() {
+        return (
+                mouseHandler.mouseX > gameX + gameWidth - 42 &&
+                        mouseHandler.mouseX < gameX + gameWidth - 42 + 25 &&
+                        mouseHandler.mouseY > gameY + 5 &&
+                        mouseHandler.mouseY < gameY + 30
+        );
+    }
+
+    /**
+     * Updates the game state, including the bird, obstacles, and checks for collisions and game over conditions.
+     */
+    protected void update() {
+        // Game loop efficiency and logic adapted from a StackExchange post by Zerro97, retrieved on 24.04.24
 
         final int FPS = 60;
         final long OptimalTime = 1000000000 / FPS;
 
-        if (running){
+        if (running) {
             long now;
             long updateTime;
             long wait;
 
-
             now = System.nanoTime();
 
+            // Update the bird and obstacles
             bird.update();
-            obs1.update();
-            obs2.update();
-            obs3.update();
-            obs4.update();
+            for (Obsticle obs : queue) {
+                obs.update();
+            }
 
-            if(bird.birdCrash(queue.get(0))||bird.outOfBounds(this)){
+            // Check for collisions or if the bird is out of bounds
+            if (bird.birdCrash(queue.get(0)) || bird.outOfBounds(this)) {
                 running = false;
-            }else {
-                if(queue.get(0).x < bird.x){
+            } else {
+                // Update the score and speed as the bird passes obstacles
+                if (queue.get(0).x < bird.getX()) {
                     score++;
-                    if(score%3 == 0 && score > 0){
+                    if (score % 3 == 0 && score > 0) {
                         speed += 0.2;
                     }
                     Obsticle shuffle = queue.remove(0);
@@ -177,32 +239,35 @@ public class FlappyBird {
                 }
             }
 
-            if(mouseInsideGame()){
-                if(mouseHandler.mousePressed){
+            // Check if the player has initiated a jump
+            if (mouseInsideGame()) {
+                if (mouseHandler.mousePressed) {
                     bird.jump();
                 }
             }
 
-            updateTime =System.nanoTime() - now;
-            wait = (OptimalTime -updateTime) / 1000000;
+            // Calculate the time taken to update the game
+            updateTime = System.nanoTime() - now;
+            wait = (OptimalTime - updateTime) / 1000000;
 
-            if(wait >= 0){
+            // Delay to maintain a consistent frame rate
+            if (wait >= 0) {
                 try {
                     Thread.sleep(wait);
                 } catch (Exception e) {
-                    System.out.println("thread cant sleep");
+                    System.out.println("Thread can't sleep");
                 }
             }
-        }else {
-            if(hoveringStartButton()&&mouseHandler.mousePressed){
+        } else {
+            // Check if the start button is pressed to begin the game
+            if (hoveringStartButton() && mouseHandler.mousePressed) {
                 reset();
                 run();
-            }else if(hoveringExitButton()&&mouseHandler.mousePressed){
+            } else if (hoveringExitButton() && mouseHandler.mousePressed) {
+                // Check if the exit button is pressed to end the game
                 done = true;
                 mouseHandler.used();
             }
-
         }
-
     }
 }

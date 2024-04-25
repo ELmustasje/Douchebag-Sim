@@ -1,22 +1,21 @@
 package no.uib.inf101.sample.midi;
 
-import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 import java.io.*;
 
 /**
- * Play the Tetris music. Sample usage:
- * <code>
- * TetrisSong music = new TetrisSong();
- * music.run(); 
- * </code>
+ * The ChadSong class implements the Runnable interface and is responsible for playing a MIDI song.
+ * It manages the loading of the song file and controls the playback using a Sequencer.
  */
 public class ChadSong implements Runnable {
     private Sequencer sequencer;
-    InputStream song;
+    private InputStream song;
 
+    /**
+     * Constructor for ChadSong. It initializes the InputStream for the MIDI song file.
+     * If the file is not found, it throws a RuntimeException.
+     */
     public ChadSong(){
         try {
             song = new FileInputStream("res/Other/chadSong.mid");

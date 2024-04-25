@@ -27,7 +27,7 @@ public class RoomTest {
     }
 
     @Test
-    void CheckPlots() {
+    void getPlots() {
         IRoom roomOne = new RoomOne(null);
         IRoom roomTwo = new RoomTwo(null);
         IRoom roomZero = new RoomZero(null);

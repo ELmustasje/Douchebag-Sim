@@ -3,30 +3,35 @@ package no.uib.inf101.sample;
 import no.uib.inf101.sample.midi.ChadSong;
 import no.uib.inf101.sample.rooms.RoomManager;
 import no.uib.inf101.sample.sprites.Sprite;
-
-import javax.print.attribute.standard.Media;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
-public class GamePanel extends JPanel implements Runnable{
+/**
+ * The GamePanel class is responsible for managing the game's main loop and rendering.
+ * It extends JPanel and implements Runnable for use in a separate thread.
+ */
+public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
+    /**
+     * The width of the game panel.
+     */
     public final static int WIDTH = 800;
-    public final static int HEIGTH = 600;
-
+    /**
+     * The height of the game panel.
+     */
+    public final static int HEIGHT = 600;
 
     MouseHandler mouseH = new MouseHandler();
     Thread gameThread;
+    Sprite sprite = new Sprite(this, mouseH);
+    RoomManager roomManager = new RoomManager(sprite, mouseH);
 
-    Sprite sprite = new Sprite(this,mouseH);
-    RoomManager roomManager = new RoomManager(sprite,mouseH);
-
-    public GamePanel(){
-        this.setPreferredSize(new Dimension(WIDTH,HEIGTH));
+    /**
+     * Constructor for the GamePanel class. It sets up the panel size, double buffering,
+     * mouse listener, and starts the background music.
+     */
+    public GamePanel() {
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setDoubleBuffered(true);
         this.addMouseListener(mouseH);
         this.setFocusable(true);
@@ -34,12 +39,13 @@ public class GamePanel extends JPanel implements Runnable{
         chadSong.run();
     }
 
-    public void startGameThread(){
+    /**
+     * Starts the game thread and the game loop.
+     */
+    public void startGameThread() {
         gameThread = new Thread(this);
         gameThread.start();
     }
-
-
 
     @Override
     public void run() {
@@ -49,20 +55,19 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    private void update(){
-        if (mouseH.mousePressed){
+    private void update() {
+        if (mouseH.mousePressed) {
             roomManager.update();
             mouseH.update();
             mouseH.used();
-        }else {
+        } else {
             roomManager.update();
             mouseH.update();
         }
-
-
     }
 
-    protected void paintComponent(Graphics g){
+    @Override
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         roomManager.draw(g2);

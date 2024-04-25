@@ -1,36 +1,64 @@
 package no.uib.inf101.sample;
 
-import no.uib.inf101.sample.rooms.RoomManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * The MouseHandler class implements the MouseListener interface and is responsible for tracking mouse events.
+ * It provides functionality to detect mouse position and button states.
+ */
 public class MouseHandler implements MouseListener {
+    /**
+     * The current x-coordinate of the mouse cursor.
+     */
     public int mouseX;
+    /**
+     * The current y-coordinate of the mouse cursor.
+     */
     public int mouseY;
+    /**
+     * Indicates whether the mouse button has been pressed.
+     */
     public boolean mousePressed;
+    /**
+     * Indicates whether the mouse button is currently being held down.
+     */
     public boolean mouseHeld;
 
-
-    public MouseHandler(){
+    /**
+     * Constructor for MouseHandler. It initializes the mouse state by updating its position.
+     */
+    public MouseHandler() {
         update();
     }
 
-    public void update(){
-        mouseX = MouseInfo.getPointerInfo().getLocation().x;
-        mouseY = MouseInfo.getPointerInfo().getLocation().y;
-        mouseX -= Main.window.getX()+5;
-        mouseY -= Main.window.getY()+30;
-
+    /**
+     * Updates the mouse position by querying the current pointer info and adjusting for the window's position.
+     */
+    public void update() {
+        Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
+        mouseX = mouseLocation.x - Main.window.getX() - 5;
+        mouseY = mouseLocation.y - Main.window.getY() - 30;
     }
-    public void used(){
+
+    /**
+     * Resets the mousePressed state to false, typically called after the mouse event has been processed.
+     */
+    public void used() {
         mousePressed = false;
     }
 
-    public String mouseInfoString(){
-        return "mouseX: " + mouseX + "mouseY: " + mouseY;
+    /**
+     * Returns a string representation of the current mouse position.
+     *
+     * @return A string containing the x and y coordinates of the mouse cursor.
+     */
+    public String mouseInfoString() {
+        return "mouseX: " + mouseX + " mouseY: " + mouseY;
     }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {

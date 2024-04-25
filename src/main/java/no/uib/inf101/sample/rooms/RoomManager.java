@@ -4,7 +4,6 @@ import no.uib.inf101.sample.MouseHandler;
 import no.uib.inf101.sample.sprites.ISprite;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,6 +25,13 @@ public class RoomManager{
     int roomIndex;
 
 
+    /**
+     * Constructor for the RoomManager class. It initializes the rooms, loads control button images,
+     * and sets the initial room.
+     *
+     * @param sprite       The sprite representing the player or main character.
+     * @param mouseHandler The MouseHandler instance for managing mouse events.
+     */
     public RoomManager(ISprite sprite, MouseHandler mouseHandler) {
         this.mouseHandler = mouseHandler;
         rooms.add(new RoomZero(mouseHandler));
@@ -46,6 +52,11 @@ public class RoomManager{
 
     }
 
+    /**
+     * Draws the current room and the room control buttons if applicable.
+     *
+     * @param g2 The Graphics2D object used for drawing operations.
+     */
     public void draw(Graphics2D g2) {
         room.drawRoom(g2);
         if(!room.getPlot().isInUse()){
@@ -112,6 +123,11 @@ public class RoomManager{
         room.setSpriteToRoom(sprite);
     }
 
+
+    /**
+     * Updates the state of the current room, including handling mouse interactions with room control buttons
+     * and the room plot.
+     */
     public void update() {
         mouseHandler.update();
         if(hoveringRoomPlot()&&!room.getPlot().isInUse()){
@@ -155,7 +171,6 @@ public class RoomManager{
             }else prevButtonGlow = false;
         }
         room.update();
-        sprite.update();
     }
 
 }
