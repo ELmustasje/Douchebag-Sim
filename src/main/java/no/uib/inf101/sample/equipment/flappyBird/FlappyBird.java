@@ -157,6 +157,7 @@ private void drawGame(Graphics2D g2) {
 
     // Draw the score
     g2.setFont(new Font("_", Font.PLAIN, 30));
+    g2.setColor(Color.RED);
     g2.drawString(String.valueOf(score), gameX + 25, gameY + 35);
 
     // Draw the start and quit buttons when the game is not running

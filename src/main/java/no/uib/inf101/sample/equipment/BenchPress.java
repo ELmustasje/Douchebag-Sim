@@ -20,9 +20,11 @@ public class BenchPress implements IEquipment{
 
     private int reps,clicksForRep,repsForSet,clickCount,clickReverse,skipFrames,skipInterval;
 
+    private int exitButtonSize, exitButtonX, exitButtonY;
+
     private boolean using, finished;
 
-    private BufferedImage img,buttonImg;
+    private BufferedImage img,buttonImg, exitButton, exitButtonGlow;
 
     private MouseHandler mouseHandler;
 
@@ -39,6 +41,9 @@ public class BenchPress implements IEquipment{
         buttonY = 270;
         buttonHeight = 80;
         buttonWidth = 80;
+        exitButtonX = 100;
+        exitButtonY = 400;
+        exitButtonSize = 40;
         skipInterval = 23;
         resetEquipment();
     }
@@ -83,6 +88,8 @@ public class BenchPress implements IEquipment{
         try {
             img = ImageIO.read(new File("res/equipment/benchpress.png"));
             buttonImg  = ImageIO.read(new File("res/Other/button.png"));
+            exitButton = ImageIO.read(new File("res/Other/quitbutton.png"));
+            exitButtonGlow = ImageIO.read(new File("res/Other/quitbuttonglow.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -137,17 +144,38 @@ public class BenchPress implements IEquipment{
         g2.drawImage(img,x,y,width,height,null);
         if(using){
             drawStats(g2);
+            drawExitButton(g2);
         }
     }
 
     @Override
     public void drawStats(Graphics2D g2) {
-        int interval = 170/(repsForSet+1);
-        g2.setColor(Color.red);
-        g2.drawRect(100,70+interval,40,170-interval);
-        g2.fillRect(100,240-interval*reps,40,interval*reps);
-        g2.drawImage(buttonImg,buttonX,buttonY,buttonWidth,buttonHeight,null);
+        int interval = 170 / (repsForSet + 1);
+        g2.setColor(Color.black);
+        g2.drawRect(100, 70 + interval, 40, 170 - interval);
+        g2.fillRect(100, 240 - interval * reps, 40, interval * reps);
+        g2.drawImage(buttonImg, buttonX, buttonY, buttonWidth, buttonHeight, null);
+
     }
+    private void drawExitButton(Graphics2D g2){
+
+
+        if(!hoveringExitButton()) {
+            g2.drawImage(exitButton, exitButtonX, exitButtonY, exitButtonSize, exitButtonSize, null);
+        }else {
+            g2.drawImage(exitButtonGlow, exitButtonX,exitButtonY, exitButtonSize, exitButtonSize,null);
+        }
+    }
+
+    private boolean hoveringExitButton(){
+        return (
+                mouseHandler.mouseX > exitButtonX &&
+                        mouseHandler.mouseX < exitButtonX + exitButtonSize &&
+                        mouseHandler.mouseY > exitButtonY &&
+                        mouseHandler.mouseY < exitButtonY+exitButtonSize
+        );
+    }
+
 
 
     @Override
@@ -179,6 +207,10 @@ public class BenchPress implements IEquipment{
                 img = ImageIO.read(new File("res/sprites/spriteBench/"+clickCount+".png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+            if(hoveringExitButton() && mouseHandler.mousePressed){
+                using = false;
+                reps = 0;
             }
         }
 

@@ -20,9 +20,11 @@ public class AbsBench implements IEquipment{
 
     private int pic, slidesForSet, slideCount, skipFrames, skipInterval;
 
+    private int exitButtonSize, exitButtonX, exitButtonY;
+
     private boolean using, finished,awaitToGoDown;
 
-    private BufferedImage img, buttonImg;
+    private BufferedImage img, buttonImg, exitButton, exitButtonGlow;
 
     private MouseHandler mouseHandler;
 
@@ -39,6 +41,9 @@ public class AbsBench implements IEquipment{
         buttonY = 320;
         buttonHeight = 80;
         buttonWidth = 80;
+        exitButtonX = 103;
+        exitButtonY = 420;
+        exitButtonSize = 40;
         skipInterval = 23;
         resetEquipment();
     }
@@ -83,6 +88,8 @@ public class AbsBench implements IEquipment{
         try {
             img = ImageIO.read(new File("res/equipment/absBench.png"));
             buttonImg  = ImageIO.read(new File("res/Other/button.png"));
+            exitButton = ImageIO.read(new File("res/Other/quitbutton.png"));
+            exitButtonGlow = ImageIO.read(new File("res/Other/quitbuttonglow.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -136,8 +143,8 @@ public class AbsBench implements IEquipment{
     public void draw(Graphics2D g2) {
         g2.drawImage(img,x,y,width,height,null);
         if(using){
-
             drawStats(g2);
+            drawExitButton(g2);
         }
     }
 
@@ -146,7 +153,6 @@ public class AbsBench implements IEquipment{
         int interval = 150/slidesForSet;
         g2.setColor(Color.black);
         g2.fillRect(100,100,50,290);
-
         g2.drawRect(160,100,50,150);
         g2.fillRect(160,250-interval*slideCount,50,interval*slideCount+1);
 
@@ -157,6 +163,23 @@ public class AbsBench implements IEquipment{
         }
 
         g2.drawImage(buttonImg,buttonX,buttonY,buttonWidth,buttonHeight,null);
+    }
+    private void drawExitButton(Graphics2D g2){
+
+        if(!hoveringExitButton()) {
+            g2.drawImage(exitButton, exitButtonX, exitButtonY, exitButtonSize, exitButtonSize, null);
+        }else {
+            g2.drawImage(exitButtonGlow, exitButtonX,exitButtonY, exitButtonSize, exitButtonSize,null);
+        }
+    }
+
+    private boolean hoveringExitButton(){
+        return (
+                mouseHandler.mouseX > exitButtonX &&
+                        mouseHandler.mouseX < exitButtonX + exitButtonSize &&
+                        mouseHandler.mouseY > exitButtonY &&
+                        mouseHandler.mouseY < exitButtonY+exitButtonSize
+        );
     }
 
 
@@ -190,6 +213,10 @@ public class AbsBench implements IEquipment{
                 img = ImageIO.read(new File("res/sprites/spriteAbsBench/"+ (pic) +".png"));
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            if(hoveringExitButton() && mouseHandler.mousePressed){
+                using = false;
+                slideCount = 0;
             }
         }
     }
