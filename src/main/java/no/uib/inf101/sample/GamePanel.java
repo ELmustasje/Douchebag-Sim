@@ -25,6 +25,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Sprite sprite = new Sprite(this, mouseH);
     RoomManager roomManager = new RoomManager(sprite, mouseH);
+    boolean victory = false;
+    EndScreen endScreen= new EndScreen();
 
     /**
      * Constructor for the GamePanel class. It sets up the panel size, double buffering,
@@ -56,6 +58,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void update() {
+        if(victory){
+            endScreen.update();
+            return;
+        }
         if (mouseH.mousePressed) {
             roomManager.update();
             mouseH.update();
@@ -64,14 +70,27 @@ public class GamePanel extends JPanel implements Runnable {
             roomManager.update();
             mouseH.update();
         }
+        if(sprite.getStrength() == 10){
+            victory = true;
+        }
     }
+
+
+
+
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        if(victory){
+            endScreen.draw(g2);
+            return;
+        }
+
         roomManager.draw(g2);
         sprite.drawSprite(g2);
         g2.dispose();
+
     }
 }

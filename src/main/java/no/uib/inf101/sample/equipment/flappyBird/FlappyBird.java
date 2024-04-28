@@ -208,6 +208,7 @@ private void drawGame(Graphics2D g2) {
      */
     protected void update() {
         // Game loop efficiency and logic adapted from a StackExchange post by Zerro97, retrieved on 24.04.24
+        //https://gamedev.stackexchange.com/questions/160329/java-game-loop-efficiency
 
         final int FPS = 60;
         final long OptimalTime = 1000000000 / FPS;
