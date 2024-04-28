@@ -44,7 +44,9 @@ public class MouseHandler implements MouseListener {
     }
 
     /**
-     * Resets the mousePressed state to false, typically called after the mouse event has been processed.
+     * Resets the mousePressed state to false.
+     * This is done to ensure that it is registered as pressed for one update().
+     * Typically called after the mouse event has been processed.
      */
     public void used() {
         mousePressed = false;
