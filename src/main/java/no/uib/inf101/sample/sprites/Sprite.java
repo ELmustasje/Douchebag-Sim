@@ -58,7 +58,7 @@ public class Sprite implements ISprite{
     public void setDefaultValues() {
         this.heigth = 400;
         this.width = 150;
-        this.strength = 9;
+        this.strength = 0;
         mirrored = false;
         try {
             currentImg = ImageIO.read(new File("res/sprites/spriteDefault.png"));
