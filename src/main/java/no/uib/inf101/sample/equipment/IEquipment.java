@@ -4,7 +4,6 @@ import no.uib.inf101.sample.rooms.Plot;
 import no.uib.inf101.sample.sprites.ISprite;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * The IEquipment interface defines the contract for equipment objects within the game.
@@ -87,13 +86,6 @@ public interface IEquipment {
      * @param plot The plot to which the equipment will be added.
      */
     void addToPlot(Plot plot);
-
-    /**
-     * Gets the image representing the equipment.
-     *
-     * @return The BufferedImage of the equipment.
-     */
-    BufferedImage getImg();
 
     /**
      * Draws the equipment on the provided Graphics2D context.

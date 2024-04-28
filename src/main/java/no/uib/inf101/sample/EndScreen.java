@@ -11,11 +11,8 @@ import java.io.IOException;
  * It displays a message to the player and shows two images that change over time.
  */
 public class EndScreen {
-    private String text1 = "Hey YOU!!";
-    private String text2 = "YOU HAVE NOW BECOME";
-    private String text3 = "THE ULITMATE DOUCHEBAG";
     private BufferedImage sprite1;
-    private BufferedImage sprite2;
+    private final BufferedImage sprite2;
     private int sprite2Size = 0;
 
     /**
@@ -77,8 +74,11 @@ public class EndScreen {
         g2.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
         g2.setColor(Color.white);
         g2.setFont(new Font("_", Font.PLAIN, 50));
+        String text1 = "Hey YOU!!";
         g2.drawString(text1, 10, 50);
+        String text2 = "YOU HAVE NOW BECOME";
         g2.drawString(text2, 10, 100);
+        String text3 = "THE ULITMATE DOUCHEBAG";
         g2.drawString(text3, 10, 150);
 
         if (sprite1 != null) {

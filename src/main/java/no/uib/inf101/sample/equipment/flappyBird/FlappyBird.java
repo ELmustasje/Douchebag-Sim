@@ -14,13 +14,15 @@ import java.util.ArrayList;
  * The FlappyBird class encapsulates the game logic, rendering, and state management for the Flappy Bird mini-game.
  */
 public class FlappyBird {
-    private Obsticle obs1, obs2, obs3, obs4; // Obstacles in the game
     private ArrayList<Obsticle> queue; // Queue to manage the obstacles
 
     private Bird bird; // The player-controlled bird
-    private BufferedImage backgroundImg, STARTtxt, quitButton, quitButtonGlow; // Images for the game's background and UI elements
+    private final BufferedImage backgroundImg;
+    private final BufferedImage STARTtxt;
+    private final BufferedImage quitButton;
+    private final BufferedImage quitButtonGlow; // Images for the game's background and UI elements
 
-    private MouseHandler mouseHandler; // The MouseHandler for managing mouse interactions
+    private final MouseHandler mouseHandler; // The MouseHandler for managing mouse interactions
     private boolean running, done; // Flags to track the game's running state and completion
 
     private int gameX, gameY, gameWidth, gameHeigth, score; // Game area dimensions and score
@@ -99,10 +101,11 @@ public class FlappyBird {
         score = 0;
         speed = 2;
         bird = new Bird();
-        obs1 = new Obsticle(670, this);
-        obs2 = new Obsticle(870, this);
-        obs3 = new Obsticle(1070, this);
-        obs4 = new Obsticle(1270, this);
+        Obsticle obs1 = new Obsticle(670, this);
+        Obsticle obs2 = new Obsticle(870, this);
+        Obsticle obs3 = new Obsticle(1070, this);
+        // Obstacles in the game
+        Obsticle obs4 = new Obsticle(1270, this);
         queue = new ArrayList<>();
         queue.add(obs1);
         queue.add(obs2);
@@ -208,7 +211,6 @@ private void drawGame(Graphics2D g2) {
      */
     protected void update() {
         // Game loop efficiency and logic adapted from a StackExchange post by Zerro97, retrieved on 24.04.24
-        //https://gamedev.stackexchange.com/questions/160329/java-game-loop-efficiency
 
         final int FPS = 60;
         final long OptimalTime = 1000000000 / FPS;

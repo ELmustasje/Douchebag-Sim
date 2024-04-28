@@ -20,7 +20,7 @@ public class EquipmentTest {
 
     @Test
     void TestChangeDifficulty(){
-        Sprite sprite = new Sprite(null,null);
+        Sprite sprite = new Sprite(null);
         IEquipment bench = new BenchPress(null);
         sprite.updateStrength(10);
         bench.changeDifficulty(sprite);

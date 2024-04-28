@@ -50,15 +50,6 @@ public class MouseHandler implements MouseListener {
         mousePressed = false;
     }
 
-    /**
-     * Returns a string representation of the current mouse position.
-     *
-     * @return A string containing the x and y coordinates of the mouse cursor.
-     */
-    public String mouseInfoString() {
-        return "mouseX: " + mouseX + " mouseY: " + mouseY;
-    }
-
 
     @Override
     public void mouseClicked(MouseEvent e) {

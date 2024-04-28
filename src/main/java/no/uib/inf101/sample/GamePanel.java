@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     MouseHandler mouseH = new MouseHandler();
     Thread gameThread;
-    Sprite sprite = new Sprite(this, mouseH);
+    Sprite sprite = new Sprite(this);
     RoomManager roomManager = new RoomManager(sprite, mouseH);
     boolean victory = false;
     EndScreen endScreen= new EndScreen();

@@ -16,8 +16,7 @@ public class RoomThree implements IRoom{
 
 
     private BufferedImage img;
-    private Plot plot;
-    private MouseHandler mouseHandler;
+    private final Plot plot;
 
     /**
      * Constructor for RoomThree. It initializes the room with default values and sets up the plot with equipment.
@@ -25,7 +24,6 @@ public class RoomThree implements IRoom{
      * @param mouseHandler The MouseHandler instance for managing mouse events.
      */
     public RoomThree(MouseHandler mouseHandler){
-        this.mouseHandler = mouseHandler;
         setDefaultValues();
         plot = new Plot(500,20,400,300);
         plot.addEquiptment(new ArcadeMachine(mouseHandler));

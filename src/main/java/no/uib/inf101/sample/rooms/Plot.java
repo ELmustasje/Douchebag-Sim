@@ -6,7 +6,10 @@ import java.awt.*;
 
 public class Plot {
 
-    private int x,y,heigth,width;
+    private final int x;
+    private final int y;
+    private final int heigth;
+    private final int width;
 
     /**
      * The equipment currently placed on the plot.

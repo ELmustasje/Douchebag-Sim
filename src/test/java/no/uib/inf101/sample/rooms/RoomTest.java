@@ -2,11 +2,6 @@ package no.uib.inf101.sample.rooms;
 
 import no.uib.inf101.sample.equipment.AbsBench;
 import no.uib.inf101.sample.equipment.BenchPress;
-import no.uib.inf101.sample.equipment.IEquipment;
-import no.uib.inf101.sample.rooms.IRoom;
-import no.uib.inf101.sample.rooms.RoomOne;
-import no.uib.inf101.sample.rooms.RoomTwo;
-import no.uib.inf101.sample.rooms.RoomZero;
 import no.uib.inf101.sample.sprites.Sprite;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +14,7 @@ public class RoomTest {
 
     @Test
     void SetSpriteToRoomTest(){
-        Sprite sprite = new Sprite(null,null);
+        Sprite sprite = new Sprite(null);
         IRoom room = new RoomOne(null);
         room.setSpriteToRoom(sprite);
         assertEquals(new Point(sprite.getX(),sprite.getY()),new Point(450,170));

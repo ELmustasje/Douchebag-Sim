@@ -15,8 +15,7 @@ import java.io.IOException;
 public class RoomTwo implements IRoom{
 
     private BufferedImage img;
-    private Plot plot;
-    private MouseHandler mouseHandler;
+    private final Plot plot;
 
     /**
      * Constructor for RoomTwo. It initializes the room with default values and sets up the plot with equipment.
@@ -24,7 +23,6 @@ public class RoomTwo implements IRoom{
      * @param mouseHandler The MouseHandler instance for managing mouse events.
      */
     public RoomTwo(MouseHandler mouseHandler){
-        this.mouseHandler = mouseHandler;
         setDefaultValues();
         plot = new Plot(100,250,300,400);
         plot.addEquiptment(new AbsBench(mouseHandler));

@@ -1,8 +1,6 @@
 package no.uib.inf101.sample.sprites;
 
 import no.uib.inf101.sample.GamePanel;
-import no.uib.inf101.sample.MouseHandler;
-import no.uib.inf101.sample.equipment.IEquipment;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -19,8 +17,7 @@ public class Sprite implements ISprite{
     private boolean mirrored;
 
 
-    private GamePanel gp;
-    private MouseHandler mouseH;
+    private final GamePanel gp;
     private BufferedImage currentImg;
     private BufferedImage drawingImg;
     private BufferedImage bisepForStat;
@@ -30,11 +27,9 @@ public class Sprite implements ISprite{
      * It initializes the sprite with default values and sets the initial image for drawing.
      *
      * @param gp     The GamePanel instance which the sprite is part of.
-     * @param mouseH The MouseHandler instance for managing mouse events related to the sprite.
      */
-    public Sprite(GamePanel gp, MouseHandler mouseH){
+    public Sprite(GamePanel gp){
         this.gp = gp;
-        this.mouseH = mouseH;
         setDefaultValues();
         drawingImg = currentImg;
     }

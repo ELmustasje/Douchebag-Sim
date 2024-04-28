@@ -1,7 +1,5 @@
 package no.uib.inf101.sample.equipment.flappyBird;
 
-import no.uib.inf101.sample.MouseHandler;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,19 +11,18 @@ import java.io.IOException;
  * It handles the bird's physics, rendering, and collision detection.
  */
 public class Bird {
-    private MouseHandler mouseHandler;
-    private double gravity = 0.2;
-    private double jumpPower = 3;
     private double speedY = 0;
-    private int x, y, width, height, margin;
+    private final int x;
+    private int y;
+    private final int width;
+    private final int height;
 
-    private BufferedImage birdImg;
+    private final BufferedImage birdImg;
 
     /**
      * Constructs a Bird object and initializes its position, size, and image.
      */
     public Bird() {
-        margin = 0;
         x = 200;
         y = 250;
         width = 25;
@@ -59,6 +56,7 @@ public class Bird {
      * Makes the bird jump by setting its vertical speed to a negative value, simulating a jump.
      */
     protected void jump() {
+        double jumpPower = 3;
         speedY = -jumpPower;
     }
 
@@ -66,6 +64,7 @@ public class Bird {
      * Updates the bird's position based on its vertical speed and gravity.
      */
     protected void update() {
+        double gravity = 0.2;
         speedY += gravity;
         y += speedY;
     }

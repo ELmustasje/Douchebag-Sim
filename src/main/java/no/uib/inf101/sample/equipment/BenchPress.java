@@ -16,17 +16,26 @@ import java.io.IOException;
  */
 public class BenchPress implements IEquipment{
 
-    private int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private final int buttonX;
+    private final int buttonY;
+    private final int buttonWidth;
+    private final int buttonHeight;
 
     private int reps,clicksForRep,repsForSet,clickCount,clickReverse,skipFrames,skipInterval;
 
-    private int exitButtonSize, exitButtonX, exitButtonY;
+    private final int exitButtonSize;
+    private final int exitButtonX;
+    private final int exitButtonY;
 
     private boolean using, finished;
 
     private BufferedImage img,buttonImg, exitButton, exitButtonGlow;
 
-    private MouseHandler mouseHandler;
+    private final MouseHandler mouseHandler;
 
     /**
      * Constructs a BenchPress object with a reference to the MouseHandler.
@@ -132,11 +141,6 @@ public class BenchPress implements IEquipment{
         this.y = plot.getY();
         this.width = plot.getWidth();
         this.height = plot.getHeight();
-    }
-
-    @Override
-    public BufferedImage getImg() {
-        return img;
     }
 
     @Override

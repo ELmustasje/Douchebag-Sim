@@ -9,8 +9,7 @@ import java.io.*;
  * It manages the loading of the song file and controls the playback using a Sequencer.
  */
 public class ChadSong implements Runnable {
-    private Sequencer sequencer;
-    private InputStream song;
+    private final InputStream song;
 
     /**
      * Constructor for ChadSong. It initializes the InputStream for the MIDI song file.
@@ -27,10 +26,11 @@ public class ChadSong implements Runnable {
     @Override
     public void run() {
         try {
-            (this.sequencer = MidiSystem.getSequencer()).setSequence(MidiSystem.getSequence(song));
-            this.sequencer.open();
-            this.sequencer.setLoopCount(-1);
-            this.sequencer.start();
+            Sequencer sequencer;
+            (sequencer = MidiSystem.getSequencer()).setSequence(MidiSystem.getSequence(song));
+            sequencer.open();
+            sequencer.setLoopCount(-1);
+            sequencer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }

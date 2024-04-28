@@ -1,10 +1,6 @@
 package no.uib.inf101.sample.equipment.flappyBird;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -17,8 +13,8 @@ public class Obsticle {
     protected int height; // The height of the obstacle
     protected int width; // The width of the obstacle
     protected int opening = 70; // The vertical opening between the top and bottom parts of the obstacle
-    private Random random; // Random number generator for obstacle height
-    private FlappyBird game; // Reference to the FlappyBird game instance
+    private final Random random; // Random number generator for obstacle height
+    private final FlappyBird game; // Reference to the FlappyBird game instance
 
     /**
      * Constructs an Obsticle object with a specified x-coordinate and a reference to the FlappyBird game.

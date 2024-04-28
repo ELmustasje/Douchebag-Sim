@@ -20,7 +20,7 @@ public class ArcadeMachine implements IEquipment {
     private int x, y, width, height;
 
     private boolean overTen, using;
-    private FlappyBird flappyBird;
+    private final FlappyBird flappyBird;
     private BufferedImage img;
 
     /**
@@ -107,11 +107,6 @@ public class ArcadeMachine implements IEquipment {
         this.y = plot.getY();
         this.width = plot.getWidth();
         this.height = plot.getHeight();
-    }
-
-    @Override
-    public BufferedImage getImg() {
-        return img;
     }
 
     @Override

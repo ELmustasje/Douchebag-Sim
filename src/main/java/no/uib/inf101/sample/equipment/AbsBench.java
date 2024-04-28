@@ -16,17 +16,29 @@ import java.io.IOException;
  */
 public class AbsBench implements IEquipment{
 
-    private int x,y,width,height,buttonX,buttonY, buttonWidth, buttonHeight;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private final int buttonX;
+    private int buttonY;
+    private final int buttonWidth;
+    private final int buttonHeight;
 
-    private int pic, slidesForSet, slideCount, skipFrames, skipInterval;
+    private int pic;
+    private int slidesForSet;
+    private int slideCount;
+    private int skipInterval;
 
-    private int exitButtonSize, exitButtonX, exitButtonY;
+    private final int exitButtonSize;
+    private final int exitButtonX;
+    private final int exitButtonY;
 
     private boolean using, finished,awaitToGoDown;
 
     private BufferedImage img, buttonImg, exitButton, exitButtonGlow;
 
-    private MouseHandler mouseHandler;
+    private final MouseHandler mouseHandler;
 
     /**
      * Constructs an AbsBench object with a reference to the MouseHandler.
@@ -68,7 +80,6 @@ public class AbsBench implements IEquipment{
         pic = 10;
         buttonY = 330;
         slidesForSet = 5;
-        skipFrames = 0;
         finished = false;
         using = false;
         setDefaultImg();
@@ -132,11 +143,6 @@ public class AbsBench implements IEquipment{
         this.y = plot.getY();
         this.width = plot.getWidth();
         this.height = plot.getHeight();
-    }
-
-    @Override
-    public BufferedImage getImg() {
-        return img;
     }
 
     @Override
